@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "olivertwist"
-version = "0.1.0"
+version = "0.1.1"
 description = "DBT DAG Auditor"
 authors = [
     "Angelos Georgiadis <angelos.georgiadis@autotrader.co.uk>",
@@ -10,6 +10,7 @@ authors = [
     "Surbhi Verma <surbhi.verma@autotrader.co.uk>",
 ]
 license = "Apache-2.0"
+readme = "README.md"
 homepage = "https://github.com/autotraderuk/oliver-twist"
 repository = "https://github.com/autotraderuk/oliver-twist"
 
