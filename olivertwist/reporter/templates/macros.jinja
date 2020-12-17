@@ -10,7 +10,7 @@
 {% endmacro %}
 
 {% macro link_to_model_page(model) %}
-    <a href="./{{ model.model_name }}.html">{{ model.model_name }}</a>
+    <a href="./{{ model.model_name }}.html">{{ model.model_name[:125] }}</a>
 {% endmacro %}
 
 {% macro status(status) %}

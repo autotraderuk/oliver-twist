@@ -6,3 +6,7 @@ thead {
 nav {
     background-color:#313c53;
 }
+
+.model-page-name{
+    word-wrap: break-word;
+}
