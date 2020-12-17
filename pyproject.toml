@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "olivertwist"
-version = "0.1.1"
+version = "0.1.2"
 description = "DBT DAG Auditor"
 authors = [
     "Angelos Georgiadis <angelos.georgiadis@autotrader.co.uk>",
