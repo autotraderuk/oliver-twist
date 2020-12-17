@@ -7,8 +7,6 @@ Created 15. Dec 2020 15:32
 """
 import json
 import logging
-import os
-import webbrowser
 from typing import List
 
 import click
@@ -27,11 +25,6 @@ logger = logging.getLogger("olivertwist")
 @click.command()
 @click.argument("input", type=click.File("r"))
 @click.option("--html/--no-html", default=True, help="Do/Don't output report in HTML")
-@click.option(
-    "--browser/--no-browser",
-    default=False,
-    help="Do/Don't open HTML report in browser. Implies --html",
-)
 def main(input, html=True, browser=False):
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_default_rules()
@@ -44,8 +37,6 @@ def main(input, html=True, browser=False):
     if html or browser:
         logger.debug("Generating HTML report...")
         render_html_report(oliver_twist)
-        if browser:
-            webbrowser.open(f"file://{os.getcwd()}/target/index.html")
 
     exit_message(results)
 
