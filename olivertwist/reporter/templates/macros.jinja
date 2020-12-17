@@ -1,0 +1,23 @@
+{% macro summary_list(summary) %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        {{ status('passed') }} Passed: {{ summary.passed }}
+    </li>
+    <li class="list-inline-item">
+        {{ status('errored') }} Errored: {{ summary.errored }}
+    </li>
+</ul>
+{% endmacro %}
+
+{% macro link_to_model_page(model) %}
+    <a href="./{{ model.model_name }}.html">{{ model.model_name }}</a>
+{% endmacro %}
+
+{% macro status(status) %}
+    {% if status == 'passed' %}
+        <i class="fas fa-check text-success"></i>
+    {% endif %}
+    {% if status == 'errored' %} 
+        <p><i class="fas fa-times text-danger"></i>
+    {% endif %}
+{% endmacro %}

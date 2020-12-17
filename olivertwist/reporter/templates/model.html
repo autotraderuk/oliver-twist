@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Results</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Message</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rule in rules %}
+        <tr>
+            <td>{{ rule.name }}</td>
+            <td>{{ rule.message }}</td>
+            <td>{{ macros.status(rule.status) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
