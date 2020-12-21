@@ -8,9 +8,11 @@ Created 16. Dec 2020 12:53
 from typing import List, Tuple
 
 from olivertwist.manifest import Manifest, Node
+from olivertwist.ruleengine.rule import rule
 from olivertwist.rules.utils import partition
 
 
+@rule(id="no-orphaned-models", name="No orphaned models allowed")
 def no_orphaned_models(manifest: Manifest) -> Tuple[List[Node], List[Node]]:
     """
     return [

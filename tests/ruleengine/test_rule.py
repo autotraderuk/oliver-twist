@@ -8,7 +8,7 @@ Created 15. Dec 2020 14:28
 from unittest.mock import Mock
 
 from olivertwist.manifest import Manifest, Node
-from olivertwist.ruleengine.rule import Rule
+from olivertwist.ruleengine.rule import Rule, rule
 
 
 def test_apply_splits_nodes_using_callable(empty_raw_manifest):
@@ -34,3 +34,14 @@ def test_rule_instances_are_callable(empty_raw_manifest):
     rule(dummy_manifest)
 
     callable.assert_called_once_with(dummy_manifest)
+
+
+def test_rule_decorator_returns_instance_of_rule():
+    callable = Mock()
+
+    decorator = rule(id="a-rule", name="A rule")
+    r = decorator(callable)
+
+    assert isinstance(r, Rule)
+    assert r.id == "a-rule"
+    assert r.name == "A rule"

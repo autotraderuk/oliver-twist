@@ -11,7 +11,21 @@ from typing import List, Tuple
 from networkx import DiGraph, all_simple_paths
 
 from olivertwist.manifest import Manifest, Node
+from olivertwist.ruleengine.rule import rule
 from olivertwist.rules.utils import partition
+
+
+@rule(id="no-rejoin-models", name="No rejoin models")
+def no_rejoin_models(
+    manifest: Manifest,
+) -> Tuple[List[Node], List[Node]]:
+    rejoin_nodes = __find_rejoin_nodes(manifest.graph)
+
+    def is_rejoin_node(node: Node):
+        return node.id in rejoin_nodes
+
+    passes, failures = partition(is_rejoin_node, manifest.nodes())
+    return list(passes), list(failures)
 
 
 def __find_rejoin_nodes(digraph: DiGraph):
@@ -40,15 +54,3 @@ def __find_rejoin_nodes(digraph: DiGraph):
                 if tmp.out_degree(node) > 1:
                     rejoin_nodes.add(node)
     return rejoin_nodes
-
-
-def no_rejoin_models(
-    manifest: Manifest,
-) -> Tuple[List[Node], List[Node]]:
-    rejoin_nodes = __find_rejoin_nodes(manifest.graph)
-
-    def is_rejoin_node(node: Node):
-        return node.id in rejoin_nodes
-
-    passes, failures = partition(is_rejoin_node, manifest.nodes())
-    return list(passes), list(failures)
