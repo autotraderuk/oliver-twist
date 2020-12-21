@@ -21,5 +21,8 @@ class Rule:
         self.name = name
         self.func = func
 
+    def __call__(self, *args, **kwargs):
+        return self.apply(*args, **kwargs)
+
     def apply(self, manifest) -> Tuple[List[Node], List[Node]]:
         return self.func(manifest)
