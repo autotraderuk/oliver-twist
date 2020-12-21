@@ -68,14 +68,16 @@ def __html_rules_by_model_name(
     result: Dict[str, List[ReportRule]] = {}
     for model_name, domain_rules in passed_rules_by_model.items():
         html_rules: List[ReportRule] = [
-            ReportRule(domain_rule.name, domain_rule.url, ReportStatus.PASSED)
+            ReportRule(
+                domain_rule.id, domain_rule.name, ReportStatus.PASSED
+            )
             for domain_rule in domain_rules
         ]
         result[model_name] = html_rules
 
     for model_name, domain_rules in failed_rules_by_model.items():
         html_rules: List[ReportRule] = [
-            ReportRule(domain_rule.name, domain_rule.url, ReportStatus.ERRORED)
+            ReportRule(domain_rule.id, domain_rule.name, ReportStatus.ERRORED)
             for domain_rule in domain_rules
         ]
         result.setdefault(model_name, []).extend(html_rules)

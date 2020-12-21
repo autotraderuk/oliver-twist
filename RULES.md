@@ -1,14 +1,14 @@
-# Staging scripts referencing multiple sources
+# Single source per staging model
 
 There are staging script(s) that have multiple source inputs.
 
 When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
 
-# Rejoin models
+# No rejoin models
 
 These models are taking part in rejoins.
 
-# Disabled models
+# No disabled models
 
 There are disabled scripts.
 
@@ -16,7 +16,7 @@ If you have disabled a script that you no longer require, you should probably de
 Assuming that you have your dbt scripts under version control, you can always retrieve the script if you need it in future.
 
 
-# Orphaned models
+# No orphaned models
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
 

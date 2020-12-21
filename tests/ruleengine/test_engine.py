@@ -13,7 +13,7 @@ from olivertwist.ruleengine.result import Result
 
 def test_rule_engine_returns_results_for_rule_set(empty_raw_manifest):
     failures = [Node({})]
-    engine = RuleEngine([Rule("test", "this always fails!", lambda m: ([], failures))])
+    engine = RuleEngine([Rule("this always fails!", "test", lambda m: ([], failures))])
 
     results = engine.run(Manifest(empty_raw_manifest))
 

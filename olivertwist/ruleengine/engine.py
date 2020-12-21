@@ -27,25 +27,20 @@ class RuleEngine:
         return cls(
             [
                 Rule(
-                    name="Disabled models",
-                    url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#disabled-models",
-                    func=no_disabled_models,
-                ),
+                    id="no-disabled-models",
+                    name="No disabled models allowed", func=no_disabled_models),
                 Rule(
-                    name="No orphaned models",
-                    url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#orphaned-models",
-                    func=no_orphaned_models,
-                ),
+                    id="no-orphaned-models",
+                    name="No orphaned models allowed", func=no_orphaned_models),
                 Rule(
-                    name="Staging scripts referencing multiple sources",
-                    url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#staging-scripts-referencing-multiple-sources",
-                    func=staging_models_have_single_source,
+                    id="single-source-per-staging-model",
+                    name="Staging scripts can only reference a single source",
+                    func=staging_models_have_single_source),
+                Rule(
+                    id="no-rejoin-models",
+                    name="No rejoin models",
+                    func=no_rejoin_models,
                 ),
-                # Rule(
-                #     name="Rejoin models",
-                #     url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#rejoin-models",
-                #     func=no_rejoin_models,
-                # ),
             ]
         )
 

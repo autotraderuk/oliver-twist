@@ -17,7 +17,7 @@ def test_apply_splits_nodes_using_callable(empty_raw_manifest):
     ]
     dummy_manifest = Manifest(empty_raw_manifest)
 
-    rule = Rule("basic_rule", "warning", lambda _: (passes, failures))
+    rule = Rule("warning", "basic_rule", lambda _: (passes, failures))
     result = rule.apply(dummy_manifest)
 
     assert result[0] == passes
