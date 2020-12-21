@@ -14,11 +14,11 @@ class Rule:
     def __init__(
         self,
         name: str,
-        message: str,
+        url: str,
         func: Callable[[Manifest], Tuple[List[Node], List[Node]]],
     ):
         self.name = name
-        self.message = message
+        self.url = url
         self.func = func
 
     def apply(self, manifest) -> Tuple[List[Node], List[Node]]:

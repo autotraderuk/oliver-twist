@@ -28,24 +28,24 @@ class RuleEngine:
             [
                 Rule(
                     name="Disabled models",
-                    message="If you have disabled a script that you no longer require, you should delete it.",
+                    url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#disabled-models",
                     func=no_disabled_models,
                 ),
                 Rule(
                     name="No orphaned models",
-                    message="Staging or mart model(s) contain zero references.",
+                    url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#orphaned-models",
                     func=no_orphaned_models,
                 ),
                 Rule(
                     name="Staging scripts referencing multiple sources",
-                    message="A staging script is referencing multiple sources.",
+                    url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#staging-scripts-referencing-multiple-sources",
                     func=staging_models_have_single_source,
                 ),
-                Rule(
-                    name="Rejoin models",
-                    message="A model is being rejoined downstream",
-                    func=no_rejoin_models,
-                ),
+                # Rule(
+                #     name="Rejoin models",
+                #     url="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#rejoin-models",
+                #     func=no_rejoin_models,
+                # ),
             ]
         )
 

@@ -21,11 +21,11 @@ class ReportRule:
     def __init__(
         self,
         name: str,
-        message: str,
+        url: str,
         status: ReportStatus,
     ):
         self.name = name
-        self.message = message
+        self.url = url
         self.status = status
 
 
