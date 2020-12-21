@@ -5,15 +5,13 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Message</th>
             <th>Status</th>
         </tr>
     </thead>
     <tbody>
         {% for rule in rules %}
         <tr>
-            <td>{{ rule.name }}</td>
-            <td>{{ rule.message }}</td>
+            <td><a href="https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#{{ rule.id }}">{{ rule.name }}</a></td>
             <td>{{ macros.status(rule.status) }}</td>
         </tr>
         {% endfor %}

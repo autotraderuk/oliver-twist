@@ -20,12 +20,12 @@ class ReportStatus(str, Enum):
 class ReportRule:
     def __init__(
         self,
+        id: str,
         name: str,
-        message: str,
         status: ReportStatus,
     ):
+        self.id = id
         self.name = name
-        self.message = message
         self.status = status
 
 

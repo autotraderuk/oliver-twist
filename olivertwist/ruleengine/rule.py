@@ -13,12 +13,12 @@ from olivertwist.manifest import Manifest, Node
 class Rule:
     def __init__(
         self,
+        id: str,
         name: str,
-        message: str,
         func: Callable[[Manifest], Tuple[List[Node], List[Node]]],
     ):
+        self.id = id
         self.name = name
-        self.message = message
         self.func = func
 
     def apply(self, manifest) -> Tuple[List[Node], List[Node]]:

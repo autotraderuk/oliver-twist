@@ -53,7 +53,9 @@ def main(input, html=True, browser=False):
 def format_for_terminal(results: List[Result]):
     for result in results:
         colour = "red" if result.has_failures else "green"
-        click.secho(f"{result.rule.name}:", fg=colour)
+        name = click.style(f"{result.rule.name}:", fg=colour)
+        link = click.style(f"https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#{result.rule.id}", fg="blue")
+        click.echo(f"{name} [{link}]:")
         for node in result.failures:
             click.secho(f" - {node.id}", fg="red")
 
