@@ -49,10 +49,10 @@ FROM {{ ref('script_name') }}
 ```
 
 
-# No references outside of its staging area
+# No references outside of its own staging area
 There are staging model(s) referencing a staging model that belongs in a different area
 
-If you want to cross domains, this should be done at mart level.
+If you want to cross areas, this should be done at mart level.
 
 # No references to marts from staging
 

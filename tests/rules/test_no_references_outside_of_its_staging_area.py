@@ -2,7 +2,7 @@ import pytest
 
 from olivertwist.manifest import Manifest
 from olivertwist.rules.no_references_outside_of_its_staging_area import (
-    no_references_outside_of_its_staging_area,
+    no_references_outside_of_its_own_staging_area,
 )
 
 
@@ -34,7 +34,7 @@ def manifest() -> Manifest:
 
 
 def test_no_references_outside_of_its_staging_area(manifest):
-    passes, failures = no_references_outside_of_its_staging_area(manifest)
+    passes, failures = no_references_outside_of_its_own_staging_area(manifest)
 
     pass_ids = [p.id for p in passes]
     failure_ids = [f.id for f in failures]
