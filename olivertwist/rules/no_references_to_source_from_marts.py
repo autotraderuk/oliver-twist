@@ -13,19 +13,19 @@ from olivertwist.ruleengine.rule import rule
 from olivertwist.rules.utils import partition
 
 
-@rule(id="no-references-to-marts-from-staging", name="No references to marts from staging")
-def no_references_to_marts_from_staging(
+@rule(id="no-references-to-source-from-marts", name="No references to source from marts")
+def no_references_to_source_from_marts(
         manifest: Manifest,
 ) -> Tuple[List[Node], List[Node]]:
-    def staging_depends_on_mart(node: Node):
-        mart_refs = [
+    def mart_depends_on_source(node: Node):
+        source_refs = [
             p
             for p in manifest.graph.predecessors(node.id)
-            if manifest.get_node(p).is_mart
+            if manifest.get_node(p).is_source
         ]
-        return node.is_staging and len(list(mart_refs)) > 0
+        return node.is_mart and len(list(source_refs)) > 0
 
     passes, failures = partition(
-        staging_depends_on_mart, manifest.nodes()
+        mart_depends_on_source, manifest.nodes()
     )
     return list(passes), list(failures)

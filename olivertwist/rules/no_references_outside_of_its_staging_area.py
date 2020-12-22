@@ -17,16 +17,16 @@ from olivertwist.rules.utils import partition
 def no_references_outside_of_its_staging_area(
         manifest: Manifest,
 ) -> Tuple[List[Node], List[Node]]:
-    def detect_staging_references_another_staging_model_in_a_different_area(node: Node):
-        invalid_refs = [
+    def staging_depends_on_staging_in_another_area(node: Node):
+        different_staging_area_refs = [
             p
             for p in manifest.graph.predecessors(node.id)
             if manifest.get_node(p).is_staging
             if not manifest.get_node(p).area == node.area
         ]
-        return node.is_staging and len(list(invalid_refs)) > 0
+        return node.is_staging and len(list(different_staging_area_refs)) > 0
 
     passes, failures = partition(
-        detect_staging_references_another_staging_model_in_a_different_area, manifest.nodes()
+        staging_depends_on_staging_in_another_area, manifest.nodes()
     )
     return list(passes), list(failures)
