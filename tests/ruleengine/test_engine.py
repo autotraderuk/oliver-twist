@@ -7,8 +7,8 @@ Created 15. Dec 2020 15:13
 """
 from olivertwist.manifest import Manifest, Node
 from olivertwist.ruleengine.engine import RuleEngine
-from olivertwist.ruleengine.rule import Rule
 from olivertwist.ruleengine.result import Result
+from olivertwist.ruleengine.rule import Rule
 
 
 def test_rule_engine_returns_results_for_rule_set(empty_raw_manifest):

@@ -5,9 +5,11 @@ Copyright (C) 2020, Auto Trader UK
 Created 15. Dec 2020 14:45
 
 """
+import pkgutil
+from importlib import import_module
 from typing import List
 
-import olivertwist.rules
+import olivertwist
 from olivertwist.manifest import Manifest
 from olivertwist.ruleengine.result import Result
 from olivertwist.ruleengine.rule import Rule
@@ -22,19 +24,24 @@ class RuleEngine:
 
     @classmethod
     def with_default_rules(cls) -> "RuleEngine":
-        rules = cls.__autodiscover_rules_in_package(olivertwist.rules)
+        rules = cls.__autodiscover_rules_in_package(olivertwist)
         return cls(rules)
 
     def run(self, manifest: Manifest) -> List[Result]:
         return [Result(rule, *rule.apply(manifest)) for rule in self.rules]
 
-    @staticmethod
-    def __autodiscover_rules_in_package(rules_package):
+    @classmethod
+    def __autodiscover_rules_in_package(cls, package):
         rules = []
-        for module_name, rule_module in rules_package.__dict__.items():
-            if not module_name.startswith("__"):
-                for obj in rule_module.__dict__.values():
-                    if isinstance(obj, Rule):
-                        rules.append(obj)
+        for info in pkgutil.walk_packages(
+            path=package.__path__, prefix=package.__name__ + "."
+        ):
+            if "__" in info.name:
+                continue
+
+            mod = import_module(info.name)
+            for obj in mod.__dict__.values():
+                if isinstance(obj, Rule):
+                    rules.append(obj)
 
         return rules
