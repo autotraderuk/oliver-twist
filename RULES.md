@@ -21,7 +21,6 @@ There are disabled scripts.
 If you have disabled a script that you no longer require, you should probably delete it.
 Assuming that you have your dbt scripts under version control, you can always retrieve the script if you need it in future.
 
-
 # No orphaned models
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
@@ -48,3 +47,22 @@ FROM {{ source('source_name', 'table_name') }}
 SELECT *
 FROM {{ ref('script_name') }}
 ```
+
+
+# No references outside of its staging area
+There are staging model(s) referencing a staging model that belongs in a different area
+
+If you want to cross domains, this should be done at mart level.
+
+# No references to marts from staging
+
+There are staging model(s) referencing a mart model. 
+
+Data should be flowing from source centric to business centric areas like so:
+ - source -> staging -> marts
+
+# No references to source from marts
+There are mart model(s) referencing a source. 
+
+Data should be flowing from source centric to business centric areas like so:
+ - source -> staging -> marts
