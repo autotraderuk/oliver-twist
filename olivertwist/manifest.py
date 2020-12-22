@@ -75,8 +75,12 @@ class Node:
     @property
     def is_staging(self) -> bool:
         return self.data["resource_type"] == "model" and (
-            self.__fqn_contains("staging") or "stg_" in self.id
+                self.__fqn_contains("staging") or "stg_" in self.id
         )
+
+    @property
+    def area(self) -> str:
+        return self.data["fqn"][2]
 
     def __fqn_contains(self, namespace: str) -> bool:
         return namespace in self.data.get("fqn", [])
