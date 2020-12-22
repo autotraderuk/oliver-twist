@@ -57,18 +57,30 @@ If you want to cross domains, this should be done at mart level.
 # No references to marts from staging
 
 There are staging model(s) referencing a mart model.
+```mermaid
 graph LR
    source --> staging --> marts --this is bad!--> staging
+```
+![Alt text](./images/invalid_mart_reference_to_staging.png)
 
 Data should be flowing from source centric to business centric areas like so:
+```mermaid
 graph LR
    source --> staging --> marts
+```
+![Alt text](./images/data_flow_diagram.png)
 
 # No references to source from marts
 There are mart model(s) referencing a source. 
+```mermaid
 graph LR
    source --> staging --> marts --This is bad!--> source
+```
+![Alt text](./images/invalid_mart_reference_to_source.png)
 
 Data should be flowing from source centric to business centric areas like so:
+```mermaid
 graph LR
    source --> staging --> marts
+```
+![Alt text](./images/data_flow_diagram.png)
