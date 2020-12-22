@@ -13,6 +13,7 @@ from typing import List
 
 import click
 
+from olivertwist.config.factory import ConfigFactory
 from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
 from olivertwist.reporter.adapter import to_html_report
@@ -32,9 +33,11 @@ logger = logging.getLogger("olivertwist")
     default=False,
     help="Do/Don't open HTML report in browser. Implies --html",
 )
-def main(input, html=True, browser=False):
+@click.option("--config", type=click.Path(exists=True), help="The path to the configuration file")
+def main(input, config, html=True, browser=False):
+    config = ConfigFactory.create_congfig_from_path(config)
     manifest = Manifest(json.load(input))
-    rule_engine = RuleEngine.with_default_rules()
+    rule_engine = RuleEngine.with_default_rules(config)
     results = rule_engine.run(manifest)
     format_for_terminal(results)
     metric_results = MetricEngine().run(manifest)
