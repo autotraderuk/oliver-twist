@@ -5,8 +5,10 @@ Copyright (C) 2020, Auto Trader UK
 Created 15. Dec 2020 14:28
 
 """
+from unittest.mock import Mock
+
 from olivertwist.manifest import Manifest, Node
-from olivertwist.ruleengine.rule import Rule
+from olivertwist.ruleengine.rule import Rule, rule
 
 
 def test_apply_splits_nodes_using_callable(empty_raw_manifest):
@@ -22,3 +24,24 @@ def test_apply_splits_nodes_using_callable(empty_raw_manifest):
 
     assert result[0] == passes
     assert result[1] == failures
+
+
+def test_rule_instances_are_callable(empty_raw_manifest):
+    callable = Mock()
+    dummy_manifest = Manifest(empty_raw_manifest)
+
+    rule = Rule(id="id", name="basic_rule", func=callable)
+    rule(dummy_manifest)
+
+    callable.assert_called_once_with(dummy_manifest)
+
+
+def test_rule_decorator_returns_instance_of_rule():
+    callable = Mock()
+
+    decorator = rule(id="a-rule", name="A rule")
+    r = decorator(callable)
+
+    assert isinstance(r, Rule)
+    assert r.id == "a-rule"
+    assert r.name == "A rule"

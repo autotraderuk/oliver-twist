@@ -9,9 +9,14 @@ Created 15. Dec 2020 17:40
 from typing import List, Tuple
 
 from olivertwist.manifest import Manifest, Node
+from olivertwist.ruleengine.rule import rule
 from olivertwist.rules.utils import partition
 
 
+@rule(
+    id="single-source-per-staging-model",
+    name="Staging scripts can only reference a single source",
+)
 def staging_models_have_single_source(
     manifest: Manifest,
 ) -> Tuple[List[Node], List[Node]]:
