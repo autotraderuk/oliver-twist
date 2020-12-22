@@ -39,23 +39,30 @@ Full options are available with:
 olivertwist manifest.json --help
 ```
 
-## Developer
+## Local Development
 
-### To dev locally
-
-Clone this repo and install all the projects packages:
+##### Clone this repo and install all the projects packages:
 
 `poetry install`
 
-To get the latest versions of the dependencies and to update the poetry.lock file run:
+##### To get the latest versions of the dependencies and to update the poetry.lock file run:
 
 `poetry update`
 
-To run oliver-twist and generate the summary report run:
+##### To run oliver-twist and generate the summary report run:
 
 `poetry run olivertwist example_manifest.json`
 
+##### Working with diagrams 
+To update and regenerate the images that illustrate rule failures in the documentation follow the next steps:
+- update the diagrams using the [mermaid syntax](https://mermaid-js.github.io/mermaid/#/)
+- install [yarn](https://classic.yarnpkg.com/en/docs/install/)
+- `cd diagrams`
+- `./generate.sh`
+- inspect the generated images in `/diagrams/output/`
+- if you're happy with the results, run `./copy.sh` so that they are copied over to `images`
+- you can now reference those images. ie. in RULES.md
 
-### Creating a distribution
+##### Creating a distribution
 
 ```poetry build --format wheel```

@@ -2,11 +2,17 @@
 
 There are staging script(s) that have multiple source inputs.
 
+![staging model with multiple sources](./images/staging_single_source.png)
+
 When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
 
 # No rejoin models
 
 These models are taking part in rejoins.
+
+![example graph showing rejoin](./images/no_rejoin.png)
+
+The example above shows that `A` is rejoined into `C`. This probably means that something is missing in `B`.
 
 # No disabled models
 
@@ -19,6 +25,8 @@ Assuming that you have your dbt scripts under version control, you can always re
 # No orphaned models
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
+
+![example graph showing orphaned model](./images/no_orphans.png)
 
 This can be caused by:
 
