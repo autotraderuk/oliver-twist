@@ -11,25 +11,10 @@ def manifest() -> Manifest:
     return Manifest(
         {
             "nodes": {
-                "a": {
-                    "unique_id": "a",
-                    "fqn": ["a"],
-                    "resource_type": "source",
-                },
                 "staging.b": {
                     "unique_id": "staging.b",
                     "fqn": ["staging", "b"],
                     "resource_type": "model",
-                },
-                "x": {
-                    "unique_id": "x",
-                    "fqn": ["x"],
-                    "resource_type": "source",
-                },
-                "y": {
-                    "unique_id": "y",
-                    "fqn": ["y"],
-                    "resource_type": "source",
                 },
                 "staging.z": {
                     "unique_id": "staging.z",
@@ -46,9 +31,21 @@ def manifest() -> Manifest:
             },
             "disabled": [],
             "sources": {
-                "a": {},
-                "x": {},
-                "y": {},
+                "a": {
+                    "unique_id": "a",
+                    "fqn": ["a"],
+                    "resource_type": "source",
+                },
+                "x": {
+                    "unique_id": "x",
+                    "fqn": ["x"],
+                    "resource_type": "source",
+                },
+                "y": {
+                    "unique_id": "y",
+                    "fqn": ["y"],
+                    "resource_type": "source",
+                },
             },
         }
     )
