@@ -39,6 +39,20 @@ Full options are available with:
 olivertwist manifest.json --help
 ```
 
+## Configuration
+
+Create a configuration file called `oliver_twist.yml` in the same directory you are running `olivertwist`. An example configuration is shown below:
+
+```yaml
+universal:
+    - id: no-rejoin-models
+      enabled: false
+    - id: no-disabled-models
+      enabled: true
+```
+
+All rules are enabled by default
+
 ## Local Development
 
 ##### Clone this repo and install all the projects packages:

@@ -10,6 +10,7 @@ from importlib import import_module
 from typing import List
 
 import olivertwist
+from olivertwist.config.factory import Config
 from olivertwist.manifest import Manifest
 from olivertwist.ruleengine.result import Result
 from olivertwist.ruleengine.rule import Rule
@@ -23,8 +24,11 @@ class RuleEngine:
         return iter(self.rules)
 
     @classmethod
-    def with_default_rules(cls) -> "RuleEngine":
-        rules = cls.__autodiscover_rules_in_package(olivertwist)
+    def with_default_rules(cls, config: Config) -> "RuleEngine":
+        all_rules = cls.__autodiscover_rules_in_package(olivertwist)
+        rules = [
+            rule for rule in all_rules if rule.id not in config.get_disabled_rule_ids()
+        ]
         return cls(rules)
 
     def run(self, manifest: Manifest) -> List[Result]:
