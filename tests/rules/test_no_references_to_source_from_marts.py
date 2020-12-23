@@ -11,11 +11,6 @@ def manifest() -> Manifest:
     return Manifest(
         {
             "nodes": {
-                "source_1": {
-                    "unique_id": "source_1",
-                    "resource_type": "source",
-                    "fqn": ["foo", "bar"],
-                },
                 "staging_1": {
                     "unique_id": "staging_1",
                     "resource_type": "model",
@@ -34,7 +29,11 @@ def manifest() -> Manifest:
             },
             "disabled": [],
             "sources": {
-                "source_1": {}
+                "source_1": {
+                    "unique_id": "source_1",
+                    "resource_type": "source",
+                    "fqn": ["foo", "bar"],
+                },
             },
         }
 
