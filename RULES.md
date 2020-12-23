@@ -72,3 +72,12 @@ There are mart model(s) referencing a source.
 
 Data should be flowing from source centric to business centric areas like so:
 ![Alt text](./images/data_flow_diagram.png)
+
+# No owner on physical models
+There are physical models without a designated owner. Physical models consist of the following:
+- sources
+- table materialization
+- view materialization
+- incremental materialization
+
+To ensure ownership and proper cataloguing of data is preserved, fill in all your physical models with the owner tag as described in the [Dbt reference](https://docs.getdbt.com/reference/resource-properties/meta/#designate-a-model-owner)

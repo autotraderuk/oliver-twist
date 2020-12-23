@@ -6,7 +6,7 @@ Created 15. Dec 2020 14:56
 
 """
 from copy import deepcopy
-from typing import Dict
+from typing import Dict, Optional
 
 import networkx as nx
 
@@ -77,6 +77,17 @@ class Node:
         return self.data["resource_type"] == "model" and (
                 self.__fqn_contains("staging") or "stg_" in self.id
         )
+
+    @property
+    def is_db_relation(self) -> bool:
+        return self.is_source or (
+                self.data['resource_type'] == 'model'
+                and self.data.get('config', {}).get('materialized', {}) in ['incremental', 'table', 'view']
+        )
+
+    @property
+    def owner(self) -> Optional[str]:
+        return self.data.get("meta", {}).get("owner", None)
 
     @property
     def area(self) -> str:
