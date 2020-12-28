@@ -33,7 +33,9 @@ logger = logging.getLogger("olivertwist")
     default=False,
     help="Do/Don't open HTML report in browser. Implies --html",
 )
-@click.option("--config", type=click.Path(exists=True), help="The path to the configuration file")
+@click.option(
+    "--config", type=click.Path(exists=True), help="The path to the configuration file"
+)
 def main(input, config, html=True, browser=False):
     config = ConfigFactory.create_congfig_from_path(config)
     manifest = Manifest(json.load(input))
@@ -57,7 +59,10 @@ def format_for_terminal(results: List[Result]):
     for result in results:
         colour = "red" if result.has_failures else "green"
         name = click.style(f"{result.rule.name}:", fg=colour)
-        link = click.style(f"https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#{result.rule.id}", fg="blue")
+        link = click.style(
+            f"https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#{result.rule.id}",
+            fg="blue",
+        )
         click.echo(f"{name} [{link}]:")
         for node in result.failures:
             click.secho(f" - {node.id}", fg="red")

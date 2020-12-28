@@ -5,7 +5,6 @@ Copyright (C) 2020, Auto Trader UK
 Created 15. Dec 2020 14:56
 
 """
-from copy import deepcopy
 from typing import Dict, Optional
 
 import networkx as nx
@@ -61,7 +60,8 @@ class Node:
 
     @property
     def is_enabled(self) -> bool:
-        # FIXME: Feels hacky to assume no config means the model is enabled. This was added to make exposures work
+        # FIXME: Feels hacky to assume no config means the model is enabled.
+        #  This was added to make exposures work
         return self.data.get("config", {}).get("enabled", True)
 
     @property
@@ -75,14 +75,15 @@ class Node:
     @property
     def is_staging(self) -> bool:
         return self.data["resource_type"] == "model" and (
-                self.__fqn_contains("staging") or "stg_" in self.id
+            self.__fqn_contains("staging") or "stg_" in self.id
         )
 
     @property
     def is_db_relation(self) -> bool:
         return self.is_source or (
-                self.data['resource_type'] == 'model'
-                and self.data.get('config', {}).get('materialized', {}) in ['incremental', 'table', 'view']
+            self.data["resource_type"] == "model"
+            and self.data.get("config", {}).get("materialized", {})
+            in ["incremental", "table", "view"]
         )
 
     @property

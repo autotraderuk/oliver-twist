@@ -1,8 +1,15 @@
-from typing import Dict
+from typing import Dict, List
 
 from olivertwist.manifest import Node
 from olivertwist.metricengine.result import MetricResult
-from olivertwist.reporter.model import *
+from olivertwist.reporter.model import (
+    Report,
+    ReportMetrics,
+    ReportModel,
+    ReportRule,
+    ReportStatus,
+    ReportSummary,
+)
 from olivertwist.ruleengine.result import Result
 from olivertwist.ruleengine.rule import Rule
 
@@ -68,9 +75,7 @@ def __html_rules_by_model_name(
     result: Dict[str, List[ReportRule]] = {}
     for model_name, domain_rules in passed_rules_by_model.items():
         html_rules: List[ReportRule] = [
-            ReportRule(
-                domain_rule.id, domain_rule.name, ReportStatus.PASSED
-            )
+            ReportRule(domain_rule.id, domain_rule.name, ReportStatus.PASSED)
             for domain_rule in domain_rules
         ]
         result[model_name] = html_rules

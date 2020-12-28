@@ -13,9 +13,12 @@ from olivertwist.ruleengine.rule import rule
 from olivertwist.rules.utils import partition
 
 
-@rule(id="no-references-outside-of-its-own-staging-area", name="No references outside of its own staging area")
+@rule(
+    id="no-references-outside-of-its-own-staging-area",
+    name="No references outside of its own staging area",
+)
 def no_references_outside_of_its_own_staging_area(
-        manifest: Manifest,
+    manifest: Manifest,
 ) -> Tuple[List[Node], List[Node]]:
     def staging_depends_on_staging_in_another_area(node: Node):
         different_staging_area_refs = [

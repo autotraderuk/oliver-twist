@@ -5,7 +5,6 @@ Copyright (C) 2020, Auto Trader UK
 Created 16. Dec 2020 14:31
 
 """
-from typing import Callable, List, Tuple
 from olivertwist.manifest import Node
 
 

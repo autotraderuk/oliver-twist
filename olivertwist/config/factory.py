@@ -13,9 +13,10 @@ try:
 except ImportError:
     from yaml import SafeLoader as YamlLoader
 
-from dataclasses_jsonschema import ValidationError    
+from dataclasses_jsonschema import ValidationError
 
 from olivertwist.config.model import Config
+
 
 class InvalidConfigException(Exception):
     """Thrown if an invalid configuration file is supplied."""

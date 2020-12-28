@@ -5,8 +5,6 @@ import shutil
 
 from jinja2 import Environment, PackageLoader
 
-from olivertwist.reporter.model import *
-
 root = pathlib.Path(__file__).parent
 target_dir = pathlib.Path(os.getcwd()) / "target"
 

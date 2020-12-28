@@ -15,8 +15,7 @@ from olivertwist.rules.utils import partition
 @rule(id="no-owner-on-physical-models", name="No owner on physical models")
 def no_owner_on_physical_models(manifest: Manifest) -> Tuple[List[Node], List[Node]]:
     passes, failures = partition(
-        lambda x: x.is_db_relation and __is_none_or_blank(x.owner),
-        manifest.nodes()
+        lambda x: x.is_db_relation and __is_none_or_blank(x.owner), manifest.nodes()
     )
     return list(passes), list(failures)
 
