@@ -55,19 +55,30 @@ All rules are enabled by default
 
 ## Local Development
 
-##### Clone this repo and install all the projects packages:
+### Clone this repo and install the project:
 
 `poetry install`
 
-##### To get the latest versions of the dependencies and to update the poetry.lock file run:
+### Install pre-commit hooks for linting
+
+This is optional, but highly recommended to avoid annoying linting failure in CI.
+
+`poetry run pre-commit install`
+
+To run the pre-commit hooks locally:
+
+`poetry pre-commit run`
+
+### To get the latest versions of the dependencies and to update the poetry.lock file run:
 
 `poetry update`
 
-##### To run oliver-twist and generate the summary report run:
+### To run oliver-twist and generate the summary report run:
 
 `poetry run olivertwist example_manifest.json`
 
-##### Working with diagrams 
+### Working with diagrams
+ 
 To update and regenerate the images that illustrate rule failures in the documentation follow the next steps:
 - update the diagrams using the [mermaid syntax](https://mermaid-js.github.io/mermaid/#/)
 - install [yarn](https://classic.yarnpkg.com/en/docs/install/)
@@ -77,6 +88,6 @@ To update and regenerate the images that illustrate rule failures in the documen
 - if you're happy with the results, run `./copy.sh` so that they are copied over to `images`
 - you can now reference those images. ie. in RULES.md
 
-##### Creating a distribution
+### Creating a distribution
 
 ```poetry build --format wheel```
