@@ -1,0 +1,15 @@
+site_name: Oliver Twist
+
+repo_name: 'oliver-twist'
+repo_url: 'https://github.com/autotraderuk/oliver-twist'
+
+theme:
+  name: 'material'
+  logo: 'images/oliver_twist_logo.svg'
+
+extra_css:
+  - css/extra.css
+  - css/font-awesome/css/all.css  
+
+markdown_extensions:
+  - attr_list
