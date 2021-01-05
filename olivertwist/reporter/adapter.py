@@ -26,9 +26,10 @@ def __derive_summary(models: List[ReportModel]) -> ReportSummary:
     # TODO: summary.skipped?
     skipped = 0
     errored = len([a_model for a_model in models if a_model.summary.errored > 0])
-    passed = len(models) - errored
+    warned = len([a_model for a_model in models if a_model.summary.warned > 0])
+    passed = len(models) - errored - warned
 
-    return ReportSummary(passed, skipped, errored)
+    return ReportSummary(passed, skipped, errored, warned)
 
 
 def __organise_by_model(
@@ -39,12 +40,15 @@ def __organise_by_model(
     passed_rules_by_model: Dict[str, List[Rule]] = __passed_rules_by_model_name(
         domain_results
     )
-    failed_rules_by_model: Dict[str, List[Rule]] = __failed_rules_by_model_name(
+    errored_rules_by_model: Dict[str, List[Rule]] = __errored_rules_by_model_name(
+        domain_results
+    )
+    warned_rules_by_model: Dict[str, List[Rule]] = __warned_rules_by_model(
         domain_results
     )
 
     html_rules_by_model: Dict[str, List[ReportRule]] = __html_rules_by_model_name(
-        passed_rules_by_model, failed_rules_by_model
+        passed_rules_by_model, errored_rules_by_model, warned_rules_by_model
     )
     metrics_results_by_model = __metric_results_by_model_name(metric_results)
 
@@ -53,7 +57,8 @@ def __organise_by_model(
         html_summary = ReportSummary(
             len(passed_rules_by_model.get(model_name, [])),
             0,
-            len(failed_rules_by_model.get(model_name, [])),
+            len(errored_rules_by_model.get(model_name, [])),
+            len(warned_rules_by_model.get(model_name, [])),
         )
         html_model = ReportModel(
             model_name,
@@ -70,7 +75,8 @@ def __organise_by_model(
 
 def __html_rules_by_model_name(
     passed_rules_by_model: Dict[str, List[Rule]],
-    failed_rules_by_model: Dict[str, List[Rule]],
+    errored_rules_by_model: Dict[str, List[Rule]],
+    warned_rules_by_model: Dict[str, List[Rule]],
 ) -> Dict[str, List[ReportRule]]:
     result: Dict[str, List[ReportRule]] = {}
     for model_name, domain_rules in passed_rules_by_model.items():
@@ -80,12 +86,20 @@ def __html_rules_by_model_name(
         ]
         result[model_name] = html_rules
 
-    for model_name, domain_rules in failed_rules_by_model.items():
+    for model_name, domain_rules in errored_rules_by_model.items():
         html_rules: List[ReportRule] = [
             ReportRule(domain_rule.id, domain_rule.name, ReportStatus.ERRORED)
             for domain_rule in domain_rules
         ]
         result.setdefault(model_name, []).extend(html_rules)
+
+    for model_name, domain_rules in warned_rules_by_model.items():
+        html_rules: List[ReportRule] = [
+            ReportRule(domain_rule.id, domain_rule.name, ReportStatus.WARNED)
+            for domain_rule in domain_rules
+        ]
+        result.setdefault(model_name, []).extend(html_rules)
+
     return result
 
 
@@ -97,11 +111,21 @@ def __passed_rules_by_model_name(domain: List[Result]) -> Dict[str, List[Rule]]:
     return passed_rules
 
 
-def __failed_rules_by_model_name(domain: List[Result]) -> Dict[str, List[Rule]]:
+def __errored_rules_by_model_name(domain: List[Result]) -> Dict[str, List[Rule]]:
     failed_rules: Dict[str, List[Rule]] = {}
     for a_domain in domain:
-        for node in a_domain.failures:
-            failed_rules.setdefault(node.id, []).append(a_domain.rule)
+        if a_domain.has_errors:
+            for node in a_domain.failures:
+                failed_rules.setdefault(node.id, []).append(a_domain.rule)
+    return failed_rules
+
+
+def __warned_rules_by_model(domain: List[Result]) -> Dict[str, List[Rule]]:
+    failed_rules: Dict[str, List[Rule]] = {}
+    for a_domain in domain:
+        if a_domain.has_warnings:
+            for node in a_domain.failures:
+                failed_rules.setdefault(node.id, []).append(a_domain.rule)
     return failed_rules
 
 

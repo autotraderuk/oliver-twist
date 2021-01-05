@@ -3,3 +3,6 @@ universal:
       enabled: false
     - id: no-disabled-models
       enabled: true
+    - id: no-orphaned-models
+      enabled: true
+      severity: warning

@@ -21,6 +21,7 @@ from olivertwist.metricengine.engine import MetricEngine
 from olivertwist.reporter.adapter import to_html_report
 from olivertwist.reporter.model import MyEncoder
 from olivertwist.reporter.reporter import output_json, render_html_report
+from olivertwist.reporter.terminal import report_to_terminal
 from olivertwist.ruleengine.engine import RuleEngine
 from olivertwist.ruleengine.result import Result
 
@@ -63,7 +64,7 @@ def check(input, config, html=True, browser=False):
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_configured_rules(config)
     results = rule_engine.run(manifest)
-    format_for_terminal(results)
+    report_to_terminal(results)
     metric_results = MetricEngine().run(manifest)
     report = to_html_report(results, metric_results)
     oliver_twist = json.loads(MyEncoder().encode(report))
@@ -79,7 +80,7 @@ def check(input, config, html=True, browser=False):
 
 def format_for_terminal(results: List[Result]):
     for result in results:
-        colour = "red" if result.has_failures else "green"
+        colour = get_colour(result)
         name = click.style(f"{result.rule.name}:", fg=colour)
         link = click.style(
             f"http://olivertwi.st/rules/#{result.rule.id}",
@@ -87,13 +88,22 @@ def format_for_terminal(results: List[Result]):
         )
         click.echo(f"{name} [{link}]:")
         for node in result.failures:
-            click.secho(f" - {node.id}", fg="red")
+            click.secho(f" - {node.id}", fg=colour)
 
         click.echo()
 
 
+def get_colour(result: Result):
+    colour = "green"
+    if result.has_errors:
+        colour = "red"
+    if result.has_warnings:
+        colour = "yellow"
+    return colour
+
+
 def exit_message(results: List[Result]):
-    if any([result.has_failures for result in results]):
+    if any([result.has_errors for result in results]):
         click.get_current_context().exit("🔀 Twisted!")
     else:
         click.echo("🟢 Oliver (all of your) models look good!")
