@@ -67,7 +67,7 @@ This is optional, but highly recommended to avoid annoying linting failure in CI
 
 To run the pre-commit hooks locally:
 
-`poetry pre-commit run`
+`poetry run pre-commit run`
 
 ### To get the latest versions of the dependencies and to update the poetry.lock file run:
 
