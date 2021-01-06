@@ -1,0 +1,104 @@
+
+:root {
+    /* Auto Trader variables */
+    --at-link:          #2a65ba;
+    --at-aqua-base:     #00d7d2;
+    --at-aqua-dark:     #06a09d;
+    --at-grey-light:    #f7f7f5;
+    --at-grey-base:     #e8e8e3;
+    --at-grey-dark:     #d0d0cb;
+    --at-blue-light:    #5d7199;
+    --at-blue-base:     #313c53;
+    --at-blue-dark:     #242d3d;
+    --at-text-dark:     #666;
+    --at-heading-color: #444;
+
+    /* Default color shades */
+    --md-default-fg-color:                  var(--at-text-dark);
+    --md-default-fg-color--light:           var(--at-blue-dark);
+    /*--md-default-fg-color--lighter:       ...; */
+    /*--md-default-fg-color--lightest:      ...; */
+    /* --md-default-bg-color:               ...; */
+    /* --md-default-bg-color--light:        ...; */
+    /* --md-default-bg-color--lighter:      ...; */
+    /* --md-default-bg-color--lightest:     ...; */
+    /* Primary color shades */
+    --md-primary-fg-color:                  var(--at-blue-base);
+    /*--md-primary-fg-color--light:         ...; */
+    /*--md-primary-fg-color--dark:          ...; */
+    /* --md-primary-bg-color:               ...; */
+    /* --md-primary-bg-color--light:        ...; */
+    /* Accent color shades */
+    --md-accent-fg-color:                   var(--at-aqua-dark);
+    /* --md-accent-fg-color--transparent:   ...; */
+    /* --md-accent-bg-color:                ...; */
+    /* --md-accent-bg-color--light:         ...; */
+    /* Code block color shades */
+    --md-code-bg-color:                     var(--at-grey-base)
+    /*--md-code-fg-color:                   ...; */
+}
+
+@font-face {
+    font-family: "Fabriga Medium";
+    font-display: optional;
+    src: url("https://c.atcdn.co.uk/fonts/ATFabriga-Medium.eot?v=1.0");
+    src: url("https://c.atcdn.co.uk/fonts/ATFabriga-Medium.eot?#iefix&v=1.0") format("embedded-opentype"), url("https://c.atcdn.co.uk/fonts/ATFabriga-Medium.woff2") format("woff2"), url("https://c.atcdn.co.uk/fonts/ATFabriga-Medium.woff") format("woff"), url("https://c.atcdn.co.uk/fonts/ATFabriga-Medium.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: "Fabriga Regular";
+    font-display: optional;
+    src: url("https://c.atcdn.co.uk/fonts/ATFabriga-Regular.eot?v=1.0");
+    src: url("https://c.atcdn.co.uk/fonts/ATFabriga-Regular.eot?#iefix&v=1.0") format("embedded-opentype"), url("https://c.atcdn.co.uk/fonts/ATFabriga-Regular.woff2") format("woff2"), url("https://c.atcdn.co.uk/fonts/ATFabriga-Regular.woff") format("woff"), url("https://c.atcdn.co.uk/fonts/ATFabriga-Regular.ttf") format("truetype")
+}
+
+.md-header-nav__title { /* Title of the site in the heading */
+    font-family: "Fabriga Medium", "Open Sans", sans-serif;
+}
+
+.md-nav__title { /* Title above the navigation */
+    font-family: "Fabriga Regular", "Open Sans", sans-serif;
+    text-transform: uppercase;
+}
+
+ul.md-nav__list, .md-nav__item .md-nav__link--active { /* Items in the navigation/TOC */
+    color: var(--at-blue-light);
+    font-family: "Fabriga Medium", "Open Sans", sans-serif;
+    padding-bottom: 0.375rem;
+}
+
+.md-nav__item .md-nav__link--active { /* The active navigation/TOC item */
+    background-color: var(--at-grey-light);
+}
+
+.md-typeset a { /* Other links in the site */
+    color: var(--at-link);
+    text-decoration-line: underline;
+}
+
+.md-typeset a:hover {
+    color: var(--at-aqua-base);
+}
+
+.md-typeset code { /* Adds to style defined in https://github.com/squidfunk/mkdocs-material/blob/master/src/assets/stylesheets/main/_typeset.scss */
+    border: 1px solid var(--at-grey-dark);
+}
+
+a.headerlink { /* The ¶ shortcuts to headings */
+    text-decoration-line: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700 !important;
+    color: var(--at-heading-color) !important;
+}
+
+.md-header-nav__button.md-logo img, .md-header-nav__button.md-logo svg {
+    width: 2rem;
+    height: 2rem;
+}
