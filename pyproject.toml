@@ -11,7 +11,7 @@ authors = [
 ]
 license = "Apache-2.0"
 readme = "README.md"
-homepage = "https://github.com/autotraderuk/oliver-twist"
+homepage = "http://olivertwi.st"
 repository = "https://github.com/autotraderuk/oliver-twist"
 
 [tool.poetry.scripts]
