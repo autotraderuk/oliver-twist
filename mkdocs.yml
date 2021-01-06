@@ -6,6 +6,7 @@ repo_url: 'https://github.com/autotraderuk/oliver-twist'
 theme:
   name: 'material'
   logo: 'images/oliver_twist_logo.svg'
+  favicon: 'images/favicon.ico'
 
 extra_css:
   - css/extra.css
