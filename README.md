@@ -1,6 +1,6 @@
 
 
-![Alt text](https://github.com/autotraderuk/oliver-twist/blob/main/images/oliver_twist_logo.png)
+![Alt text](https://github.com/autotraderuk/oliver-twist/blob/main/docs/images/oliver_twist_logo.png)
 # oliver-twist
 
 DAG Auditor
@@ -10,7 +10,7 @@ DAG Auditor
 
 oliver-twist is a dag auditing tool that audits the [DBT](https://www.getdbt.com/) DAG and generates a summary report. The rules implemented can be found [here](RULES.md)
 
-![please sir, can I automate my DAG auditing](https://github.com/autotraderuk/oliver-twist/blob/main/images/oliver_dag_meme.jpg)
+![please sir, can I automate my DAG auditing](https://github.com/autotraderuk/oliver-twist/blob/main/docs/images/oliver_dag_meme.jpg)
 
 # Getting Started
 
