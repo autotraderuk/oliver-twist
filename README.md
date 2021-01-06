@@ -82,10 +82,10 @@ To run the pre-commit hooks locally:
 To update and regenerate the images that illustrate rule failures in the documentation follow the next steps:
 - update the diagrams using the [mermaid syntax](https://mermaid-js.github.io/mermaid/#/)
 - install [yarn](https://classic.yarnpkg.com/en/docs/install/)
-- `cd diagrams`
+- `cd docs/diagrams`
 - `./generate.sh`
-- inspect the generated images in `/diagrams/output/`
-- if you're happy with the results, run `./copy.sh` so that they are copied over to `images`
+- inspect the generated images in `./docs/diagrams/output/`
+- if you're happy with the results, run `./copy.sh` so that they are copied over to `./docs/images`
 - you can now reference those images. ie. in RULES.md
 
 ### Creating a distribution
