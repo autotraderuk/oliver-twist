@@ -2,7 +2,7 @@
 
 There are staging script(s) that have multiple source inputs.
 
-![staging model with multiple sources](./docs/images/staging_single_source.png)
+![staging model with multiple sources](images/staging_single_source.png)
 
 When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
 
@@ -10,7 +10,7 @@ When a staging script depends on a source, it should be a one-to-one mapping. Th
 
 These models are taking part in rejoins.
 
-![example graph showing rejoin](./docs/images/no_rejoin.png)
+![example graph showing rejoin](images/no_rejoin.png)
 
 The example above shows that `A` is rejoined into `C`. This probably means that something is missing in `B`.
 
@@ -25,7 +25,7 @@ Assuming that you have your dbt scripts under version control, you can always re
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
 
-![example graph showing orphaned model](./docs/images/no_orphans.png)
+![example graph showing orphaned model](images/no_orphans.png)
 
 This can be caused by:
 
@@ -57,21 +57,21 @@ If you want to cross areas, this should be done at mart level.
 # No references to marts from staging
 
 There are staging model(s) referencing a mart model.
-![Alt text](./docs/images/no_references_to_marts_from_staging.png)
+![Alt text](images/no_references_to_marts_from_staging.png)
 
 Data should be flowing from source centric to business centric areas like so:
 ```mermaid
 graph LR
    source --> staging --> marts
 ```
-![Alt text](./docs/images/data_flow_diagram.png)
+![Alt text](images/data_flow_diagram.png)
 
 # No references to source from marts
 There are mart model(s) referencing a source. 
-![Alt text](./docs/images/no_references_to_source_from_marts.png)
+![Alt text](images/no_references_to_source_from_marts.png)
 
 Data should be flowing from source centric to business centric areas like so:
-![Alt text](./docs/images/data_flow_diagram.png)
+![Alt text](images/data_flow_diagram.png)
 
 # No owner on physical models
 There are physical models without a designated owner. Physical models consist of the following:

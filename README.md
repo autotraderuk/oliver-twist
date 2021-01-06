@@ -8,7 +8,7 @@ DAG Auditor
 ![Build status badge](https://github.com/autotraderuk/oliver-twist/workflows/CI/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-oliver-twist is a dag auditing tool that audits the [DBT](https://www.getdbt.com/) DAG and generates a summary report. The rules implemented can be found [here](RULES.md)
+oliver-twist is a dag auditing tool that audits the [DBT](https://www.getdbt.com/) DAG and generates a summary report. The rules implemented are described [here](./docs/rules.md)
 
 ![please sir, can I automate my DAG auditing](https://github.com/autotraderuk/oliver-twist/blob/main/docs/images/oliver_dag_meme.jpg)
 
@@ -86,7 +86,7 @@ To update and regenerate the images that illustrate rule failures in the documen
 - `./generate.sh`
 - inspect the generated images in `./docs/diagrams/output/`
 - if you're happy with the results, run `./copy.sh` so that they are copied over to `./docs/images`
-- you can now reference those images. ie. in RULES.md
+- you can now reference those images. e.g. in `.docs/rules.md`
 
 ### Creating a distribution
 
