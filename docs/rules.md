@@ -48,8 +48,8 @@ SELECT *
 FROM {{ ref('script_name') }}
 ```
 
-
 # No references outside of its own staging area
+
 There are staging model(s) referencing a staging model that belongs in a different area
 
 If you want to cross areas, this should be done at mart level.
@@ -57,20 +57,25 @@ If you want to cross areas, this should be done at mart level.
 # No references to marts from staging
 
 There are staging model(s) referencing a mart model.
+
 ![Alt text](images/no_references_to_marts_from_staging.png)
 
 Data should be flowing from source centric to business centric areas like so:
+
 ```mermaid
 graph LR
    source --> staging --> marts
 ```
+
 ![Alt text](images/data_flow_diagram.png)
 
 # No references to source from marts
 There are mart model(s) referencing a source. 
+
 ![Alt text](images/no_references_to_source_from_marts.png)
 
 Data should be flowing from source centric to business centric areas like so:
+
 ![Alt text](images/data_flow_diagram.png)
 
 # No owner on physical models
