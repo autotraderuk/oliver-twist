@@ -1,6 +1,6 @@
 
 
-![Alt text](https://github.com/autotraderuk/oliver-twist/blob/main/docs/images/oliver_twist_logo.png)
+![Alt text](http://olivertwi.st/images/oliver_twist_logo.png)
 # oliver-twist
 
 DAG Auditor
@@ -8,9 +8,9 @@ DAG Auditor
 ![Build status badge](https://github.com/autotraderuk/oliver-twist/workflows/CI/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-oliver-twist is a dag auditing tool that audits the [DBT](https://www.getdbt.com/) DAG and generates a summary report. The rules implemented are described [here](./docs/rules.md)
+oliver-twist is a dag auditing tool that audits the [DBT](https://www.getdbt.com/) DAG and generates a summary report. There is a [docs site][1], including descriptions of all [currently implemented rules][2].
 
-![please sir, can I automate my DAG auditing](https://github.com/autotraderuk/oliver-twist/blob/main/docs/images/oliver_dag_meme.jpg)
+![please sir, can I automate my DAG auditing](http://olivertwi.st/images/oliver_dag_meme.jpg)
 
 # Getting Started
 
@@ -51,7 +51,7 @@ universal:
       enabled: true
 ```
 
-All rules are enabled by default
+[All rules][2] are enabled by default
 
 ## Local Development
 
@@ -91,3 +91,7 @@ To update and regenerate the images that illustrate rule failures in the documen
 ### Creating a distribution
 
 ```poetry build --format wheel```
+
+
+[1]: http://olivertwi.st/
+[2]: http://olivertwi.st/rules/
