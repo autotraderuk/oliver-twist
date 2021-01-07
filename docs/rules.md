@@ -72,6 +72,20 @@ The example above shows that `Staging` is rejoined into `Mart B`. This probably 
 
 There are staging model(s) referencing a staging model that belongs in a different area
 
+```mermaid
+graph LR
+  subgraph Staging2
+  src_b --> stg_b
+  end
+  subgraph Staging1
+  src_a --> stg_a
+  end
+  subgraph Staging3
+  src_b --> stg_c
+  end
+  
+```
+
 If you want to cross areas, this should be done at mart level.
 
 ## No references to marts from staging
