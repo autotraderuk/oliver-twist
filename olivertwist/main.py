@@ -60,7 +60,7 @@ def format_for_terminal(results: List[Result]):
         colour = "red" if result.has_failures else "green"
         name = click.style(f"{result.rule.name}:", fg=colour)
         link = click.style(
-            f"https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#{result.rule.id}",
+            f"https://github.com/autotraderuk/oliver-twist/blob/main/docs/rules.md#{result.rule.id}",
             fg="blue",
         )
         click.echo(f"{name} [{link}]:")
