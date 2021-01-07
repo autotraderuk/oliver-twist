@@ -2,7 +2,7 @@
 title: Rules
 description: The dag auditing rules
 ---
-# Single source per staging model
+## Single source per staging model
 
 There are staging script(s) that have multiple source inputs.
 
@@ -14,7 +14,7 @@ graph LR
 
 When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
 
-# No rejoin models
+## No rejoin models
 
 These models are taking part in rejoins.
 
@@ -28,14 +28,14 @@ graph LR
 
 The example above shows that `Staging` is rejoined into `Mart B`. This probably means that something is missing in `Mart A`.
 
-# No disabled models
+## No disabled models
 
 There are disabled scripts.
 
 If you have disabled a script that you no longer require, you should probably delete it.
 Assuming that you have your dbt scripts under version control, you can always retrieve the script if you need it in future.
 
-# No orphaned models
+## No orphaned models
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
 
@@ -67,13 +67,13 @@ SELECT *
 FROM {{ ref('script_name') }}
 ```
 
-# No references outside of its own staging area
+## No references outside of its own staging area
 
 There are staging model(s) referencing a staging model that belongs in a different area
 
 If you want to cross areas, this should be done at mart level.
 
-# No references to marts from staging
+## No references to marts from staging
 
 There are staging model(s) referencing a mart model.
 
@@ -92,7 +92,7 @@ graph LR
   Staging --> Marts
 ```
 
-# No references to source from marts
+## No references to source from marts
 
 There are mart model(s) referencing a source. 
 
@@ -111,7 +111,7 @@ graph LR
   Staging --> Marts
 ```
 
-# No owner on physical models
+## No owner on physical models
 
 There are physical models without a designated owner. Physical models consist of the following:
 - sources
