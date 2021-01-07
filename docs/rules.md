@@ -1,3 +1,7 @@
+---
+title: Rules
+description: The dag auditing rules
+---
 # Single source per staging model
 
 There are staging script(s) that have multiple source inputs.

@@ -1,3 +1,7 @@
+---
+title: Homepage
+description: A dbt dag auditing tool
+---
 # Oliver Twist
 
 DAG Auditor
