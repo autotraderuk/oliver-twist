@@ -2,31 +2,6 @@
 title: Rules
 description: The dag auditing rules
 ---
-## Single source per staging model
-
-There are staging script(s) that have multiple source inputs.
-
-```mermaid
-graph LR
-  src1[Source A] --> Staging
-  src2[Source B] --> Staging
-```
-
-When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
-
-## No rejoin models
-
-These models are taking part in rejoins.
-
-```mermaid
-graph LR
-  Source --> Staging
-  Staging --> m1[Mart A]
-  m1 --> m2[Mart B]
-  Staging --> m2
-```
-
-The example above shows that `Staging` is rejoined into `Mart B`. This probably means that something is missing in `Mart A`.
 
 ## No disabled models
 
@@ -66,6 +41,32 @@ FROM {{ source('source_name', 'table_name') }}
 SELECT *
 FROM {{ ref('script_name') }}
 ```
+
+## Single source per staging model
+
+There are staging script(s) that have multiple source inputs.
+
+```mermaid
+graph LR
+  src1[Source A] --> Staging
+  src2[Source B] --> Staging
+```
+
+When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
+
+## No rejoin models
+
+These models are taking part in rejoins.
+
+```mermaid
+graph LR
+  Source --> Staging
+  Staging --> m1[Mart A]
+  m1 --> m2[Mart B]
+  Staging --> m2
+```
+
+The example above shows that `Staging` is rejoined into `Mart B`. This probably means that something is missing in `Mart A`.
 
 ## No references outside of its own staging area
 
