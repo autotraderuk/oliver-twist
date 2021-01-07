@@ -16,8 +16,7 @@ There are model(s) that have become disconnected and have no resolvable dependen
 
 ```mermaid
 graph LR
-  A --> B
-  B --> C
+  A --> B --> C
   Orphan
 ```
 
@@ -48,8 +47,7 @@ There are staging script(s) that have multiple source inputs.
 
 ```mermaid
 graph LR
-  src1[Source A] --> Staging
-  src2[Source B] --> Staging
+  src1[Source A] & src2[Source B] --> Staging
 ```
 
 When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
@@ -60,9 +58,7 @@ These models are taking part in rejoins.
 
 ```mermaid
 graph LR
-  Source --> Staging
-  Staging --> m1[Mart A]
-  m1 --> m2[Mart B]
+  Source --> Staging --> m1[Mart A] --> m2[Mart B]
   Staging --> m2
 ```
 
@@ -74,14 +70,14 @@ There are staging model(s) referencing a staging model that belongs in a differe
 
 ```mermaid
 graph LR
-  subgraph Staging2
+  subgraph stg2[Staging 2]
   src_b --> stg_b
   end
-  subgraph Staging1
+  subgraph stg1[Staging 1]
   src_a --> stg_a
   end
-  subgraph Staging3
-  src_b --> stg_c
+  subgraph stg3[Staging 3]
+  src_b --This is bad!--> stg_c
   end
   
 ```
@@ -94,8 +90,7 @@ There are staging model(s) referencing a mart model.
 
 ```mermaid
 graph LR
-  Source --> Staging
-  Staging --> Marts
+  Source --> Staging --> Marts
   Marts --This is bad!--> Staging
 ```
 
@@ -103,8 +98,7 @@ Data should be flowing from source centric to business centric areas like so:
 
 ```mermaid
 graph LR
-  Source --> Staging
-  Staging --> Marts
+  Source --> Staging --> Marts
 ```
 
 ## No references to source from marts
@@ -113,8 +107,7 @@ There are mart model(s) referencing a source.
 
 ```mermaid
 graph LR
-  Source --> Staging
-  Staging --> Marts
+  Source --> Staging --> Marts
   Source --This is bad!--> m2[Mart B]
 ```
 
@@ -122,8 +115,7 @@ Data should be flowing from source centric to business centric areas like so:
 
 ```mermaid
 graph LR
-  Source --> Staging
-  Staging --> Marts
+  Source --> Staging --> Marts
 ```
 
 ## No owner on physical models
