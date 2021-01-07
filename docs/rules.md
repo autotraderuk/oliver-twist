@@ -6,7 +6,11 @@ description: The dag auditing rules
 
 There are staging script(s) that have multiple source inputs.
 
-![staging model with multiple sources](images/staging_single_source.png)
+```mermaid
+graph LR
+  src1[Source A] --> Staging
+  src2[Source B] --> Staging
+```
 
 When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
 
@@ -14,9 +18,15 @@ When a staging script depends on a source, it should be a one-to-one mapping. Th
 
 These models are taking part in rejoins.
 
-![example graph showing rejoin](images/no_rejoin.png)
+```mermaid
+graph LR
+  Source --> Staging
+  Staging --> m1[Mart A]
+  m1 --> m2[Mart B]
+  Staging --> m2
+```
 
-The example above shows that `A` is rejoined into `C`. This probably means that something is missing in `B`.
+The example above shows that `Staging` is rejoined into `Mart B`. This probably means that something is missing in `Mart A`.
 
 # No disabled models
 
@@ -29,7 +39,12 @@ Assuming that you have your dbt scripts under version control, you can always re
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
 
-![example graph showing orphaned model](images/no_orphans.png)
+```mermaid
+graph LR
+  A --> B
+  B --> C
+  Orphan
+```
 
 This can be caused by:
 
@@ -62,27 +77,42 @@ If you want to cross areas, this should be done at mart level.
 
 There are staging model(s) referencing a mart model.
 
-![Alt text](images/no_references_to_marts_from_staging.png)
+```mermaid
+graph LR
+  Source --> Staging
+  Staging --> Marts
+  Marts --This is bad!--> Staging
+```
 
 Data should be flowing from source centric to business centric areas like so:
 
 ```mermaid
 graph LR
-   source --> staging --> marts
+  Source --> Staging
+  Staging --> Marts
 ```
 
-![Alt text](images/data_flow_diagram.png)
-
 # No references to source from marts
+
 There are mart model(s) referencing a source. 
 
-![Alt text](images/no_references_to_source_from_marts.png)
+```mermaid
+graph LR
+  Source --> Staging
+  Staging --> Marts
+  Source --This is bad!--> m2[Mart B]
+```
 
 Data should be flowing from source centric to business centric areas like so:
 
-![Alt text](images/data_flow_diagram.png)
+```mermaid
+graph LR
+  Source --> Staging
+  Staging --> Marts
+```
 
 # No owner on physical models
+
 There are physical models without a designated owner. Physical models consist of the following:
 - sources
 - table materialization
