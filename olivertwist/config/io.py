@@ -46,6 +46,11 @@ class ConfigIO:
         return cls.__validate(config)
 
     @classmethod
+    def write(cls, config: Config, path: Union[Path, str]):
+        with open(path, "w") as handle:
+            yaml.dump(config.to_dict(), handle)
+
+    @classmethod
     def __parse(cls, config_file_path: Union[Path, str]) -> Config:
         try:
             with open(config_file_path, "rb") as handle:
