@@ -38,7 +38,7 @@ class ConfigFactory:
             raise InvalidConfigException(e)
 
     @classmethod
-    def create_congfig_from_path(cls, path: str) -> Config:
+    def create_config_from_path(cls, path: str) -> Config:
         if path is None:
             if os.path.isfile(DEFAULT_CONFIG_FILE_PATH):
                 return cls.__parse(DEFAULT_CONFIG_FILE_PATH)

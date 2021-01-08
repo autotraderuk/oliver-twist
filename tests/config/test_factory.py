@@ -23,7 +23,7 @@ PATH_TO_INVALID_CONFIG = os.path.join(os.path.dirname(__file__), "invalid_config
 
 
 def test_parsing_valid_config():
-    config = ConfigFactory.create_congfig_from_path(PATH_TO_VALID_CONFIG)
+    config = ConfigFactory.create_config_from_path(PATH_TO_VALID_CONFIG)
 
     assert config == Config(
         universal=[
@@ -34,11 +34,11 @@ def test_parsing_valid_config():
 
 
 def test_getting_disabled_rule_ids_from_config():
-    config = ConfigFactory.create_congfig_from_path(PATH_TO_VALID_CONFIG)
+    config = ConfigFactory.create_config_from_path(PATH_TO_VALID_CONFIG)
 
     assert config.get_disabled_rule_ids() == ["no-rejoin-models"]
 
 
 def test_parsing_invalid_config():
     with pytest.raises(InvalidConfigException):
-        ConfigFactory.create_congfig_from_path(PATH_TO_INVALID_CONFIG)
+        ConfigFactory.create_config_from_path(PATH_TO_INVALID_CONFIG)
