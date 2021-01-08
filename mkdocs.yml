@@ -12,7 +12,6 @@ theme:
 extra_css:
   - css/extra.css
   - css/font-awesome/css/all.css  
-  - https://unpkg.com/mermaid@8.8.4/dist/mermaid.css
 
 extra_javascript:
   - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
