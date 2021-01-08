@@ -13,7 +13,7 @@ from typing import List
 
 import click
 
-from olivertwist.config.factory import ConfigFactory
+from olivertwist.config.io import ConfigIO
 from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
 from olivertwist.reporter.adapter import to_html_report
@@ -37,7 +37,7 @@ logger = logging.getLogger("olivertwist")
     "--config", type=click.Path(exists=True), help="The path to the configuration file"
 )
 def main(input, config, html=True, browser=False):
-    config = ConfigFactory.create_config_from_path(config)
+    config = ConfigIO.read(config)
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_default_rules(config)
     results = rule_engine.run(manifest)

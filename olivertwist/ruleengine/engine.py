@@ -10,7 +10,7 @@ from importlib import import_module
 from typing import List
 
 import olivertwist
-from olivertwist.config.factory import Config
+from olivertwist.config.model import Config
 from olivertwist.manifest import Manifest
 from olivertwist.ruleengine.result import Result
 from olivertwist.ruleengine.rule import Rule

@@ -32,9 +32,9 @@ class DuplicateEntryError(InvalidConfigError):
 DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
 
 
-class ConfigFactory:
+class ConfigIO:
     @classmethod
-    def create_config_from_path(cls, path: Union[Path, str]) -> Config:
+    def read(cls, path: Union[Path, str]) -> Config:
         if path is None:
             if DEFAULT_CONFIG_FILE_PATH.exists():
                 config = cls.__parse(DEFAULT_CONFIG_FILE_PATH)

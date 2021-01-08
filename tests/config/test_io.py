@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from olivertwist.config.factory import (
-    ConfigFactory,
+from olivertwist.config.io import (
+    ConfigIO,
     InvalidConfigError,
 )
 from olivertwist.config.model import (
@@ -24,7 +24,7 @@ PATH_TO_DUPLICATE_CONFIG = Path(__file__).parent / "duplicate_config.yml"
 
 
 def test_parsing_valid_config():
-    config = ConfigFactory.create_config_from_path(PATH_TO_VALID_CONFIG)
+    config = ConfigIO.read(PATH_TO_VALID_CONFIG)
 
     assert config == Config(
         universal=[
@@ -35,22 +35,22 @@ def test_parsing_valid_config():
 
 
 def test_getting_disabled_rule_ids_from_config():
-    config = ConfigFactory.create_config_from_path(PATH_TO_VALID_CONFIG)
+    config = ConfigIO.read(PATH_TO_VALID_CONFIG)
 
     assert config.get_disabled_rule_ids() == ["no-rejoin-models"]
 
 
 def test_parsing_invalid_config():
     with pytest.raises(InvalidConfigError):
-        ConfigFactory.create_config_from_path(PATH_TO_INVALID_CONFIG)
+        ConfigIO.read(PATH_TO_INVALID_CONFIG)
 
 
 def test_parsing_config_with_duplicates_raises_error():
     with pytest.raises(InvalidConfigError):
-        ConfigFactory.create_config_from_path(PATH_TO_DUPLICATE_CONFIG)
+        ConfigIO.read(PATH_TO_DUPLICATE_CONFIG)
 
 
 def test_parsing_missing_config_file():
     path_to_non_existent_config = Path() / "non_existent_config.yml"
     with pytest.raises(FileNotFoundError):
-        ConfigFactory.create_config_from_path(path_to_non_existent_config)
+        ConfigIO.read(path_to_non_existent_config)
