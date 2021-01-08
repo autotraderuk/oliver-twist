@@ -1,0 +1,7 @@
+universal:
+    - id: no-rejoin-models
+      enabled: false
+    - id: no-disabled-models
+      enabled: true
+    - id: no-rejoin-models
+      enabled: true

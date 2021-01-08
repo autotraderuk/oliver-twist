@@ -5,25 +5,26 @@ Copyright (C) 2020, Auto Trader UK
 Created 22. Dec 2020 19:10
 
 """
-import os
+from pathlib import Path
 
 import pytest
 
 from olivertwist.config.factory import (
     ConfigFactory,
-    InvalidConfigException,
+    InvalidConfigError,
 )
 from olivertwist.config.model import (
     Config,
     RuleConfig,
 )
 
-PATH_TO_VALID_CONFIG = os.path.join(os.path.dirname(__file__), "valid_config.yml")
-PATH_TO_INVALID_CONFIG = os.path.join(os.path.dirname(__file__), "invalid_config.yml")
+PATH_TO_VALID_CONFIG = Path(__file__).parent / "valid_config.yml"
+PATH_TO_INVALID_CONFIG = Path(__file__).parent / "invalid_config.yml"
+PATH_TO_DUPLICATE_CONFIG = Path(__file__).parent / "duplicate_config.yml"
 
 
 def test_parsing_valid_config():
-    config = ConfigFactory.create_congfig_from_path(PATH_TO_VALID_CONFIG)
+    config = ConfigFactory.create_config_from_path(PATH_TO_VALID_CONFIG)
 
     assert config == Config(
         universal=[
@@ -34,11 +35,22 @@ def test_parsing_valid_config():
 
 
 def test_getting_disabled_rule_ids_from_config():
-    config = ConfigFactory.create_congfig_from_path(PATH_TO_VALID_CONFIG)
+    config = ConfigFactory.create_config_from_path(PATH_TO_VALID_CONFIG)
 
     assert config.get_disabled_rule_ids() == ["no-rejoin-models"]
 
 
 def test_parsing_invalid_config():
-    with pytest.raises(InvalidConfigException):
-        ConfigFactory.create_congfig_from_path(PATH_TO_INVALID_CONFIG)
+    with pytest.raises(InvalidConfigError):
+        ConfigFactory.create_config_from_path(PATH_TO_INVALID_CONFIG)
+
+
+def test_parsing_config_with_duplicates_raises_error():
+    with pytest.raises(InvalidConfigError):
+        ConfigFactory.create_config_from_path(PATH_TO_DUPLICATE_CONFIG)
+
+
+def test_parsing_missing_config_file():
+    path_to_non_existent_config = Path() / "non_existent_config.yml"
+    with pytest.raises(FileNotFoundError):
+        ConfigFactory.create_config_from_path(path_to_non_existent_config)

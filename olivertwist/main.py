@@ -37,7 +37,7 @@ logger = logging.getLogger("olivertwist")
     "--config", type=click.Path(exists=True), help="The path to the configuration file"
 )
 def main(input, config, html=True, browser=False):
-    config = ConfigFactory.create_congfig_from_path(config)
+    config = ConfigFactory.create_config_from_path(config)
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_default_rules(config)
     results = rule_engine.run(manifest)

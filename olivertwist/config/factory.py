@@ -5,7 +5,10 @@ Copyright (C) 2020, Auto Trader UK
 Created 22. Dec 2020 19:36
 
 """
-import os.path
+from collections import Counter
+from pathlib import Path
+from typing import Union
+
 import yaml
 
 try:
@@ -18,16 +21,32 @@ from dataclasses_jsonschema import ValidationError
 from olivertwist.config.model import Config
 
 
-class InvalidConfigException(Exception):
+class InvalidConfigError(Exception):
     """Thrown if an invalid configuration file is supplied."""
 
 
-DEFAULT_CONFIG_FILE_PATH = "./olivertwist.yml"
+class DuplicateEntryError(InvalidConfigError):
+    """Duplicate sections were present in the supplied config."""
+
+
+DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
 
 
 class ConfigFactory:
     @classmethod
-    def __parse(cls, config_file_path) -> Config:
+    def create_config_from_path(cls, path: Union[Path, str]) -> Config:
+        if path is None:
+            if DEFAULT_CONFIG_FILE_PATH.exists():
+                config = cls.__parse(DEFAULT_CONFIG_FILE_PATH)
+            else:
+                return Config(universal=[])
+        else:
+            config = cls.__parse(path)
+
+        return cls.__validate(config)
+
+    @classmethod
+    def __parse(cls, config_file_path: Union[Path, str]) -> Config:
         try:
             with open(config_file_path, "rb") as handle:
                 yaml_config_dict = yaml.load(
@@ -35,14 +54,13 @@ class ConfigFactory:
                 )
                 return Config.from_dict(yaml_config_dict)
         except ValidationError as e:
-            raise InvalidConfigException(e)
+            raise InvalidConfigError(e)
 
     @classmethod
-    def create_congfig_from_path(cls, path: str) -> Config:
-        if path is None:
-            if os.path.isfile(DEFAULT_CONFIG_FILE_PATH):
-                return cls.__parse(DEFAULT_CONFIG_FILE_PATH)
-            else:
-                return Config(universal=[])
-        else:
-            return cls.__parse(path)
+    def __validate(cls, config: Config) -> Config:
+        entry_counts = Counter(rule.id for rule in config.universal)
+        duplicates = [id_ for id_, count in entry_counts.items() if count > 1]
+        if duplicates:
+            raise DuplicateEntryError(", ".join(duplicates))
+
+        return config
