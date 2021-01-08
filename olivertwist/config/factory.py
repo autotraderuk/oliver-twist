@@ -29,20 +29,24 @@ class DuplicateEntryError(InvalidConfigError):
     """Duplicate sections were present in the supplied config."""
 
 
-DEFAULT_CONFIG_FILE_PATH = "./olivertwist.yml"
+DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
 
 
 class ConfigFactory:
     @classmethod
     def create_config_from_path(cls, path: Union[Path, str]) -> Config:
-        path = path or DEFAULT_CONFIG_FILE_PATH
-        try:
-            return cls.__validate(cls.__parse(path))
-        except FileNotFoundError:
-            return Config(universal=[])
+        if path is None:
+            if DEFAULT_CONFIG_FILE_PATH.exists():
+                config = cls.__parse(DEFAULT_CONFIG_FILE_PATH)
+            else:
+                return Config(universal=[])
+        else:
+            config = cls.__parse(path)
+
+        return cls.__validate(config)
 
     @classmethod
-    def __parse(cls, config_file_path) -> Config:
+    def __parse(cls, config_file_path: Union[Path, str]) -> Config:
         try:
             with open(config_file_path, "rb") as handle:
                 yaml_config_dict = yaml.load(

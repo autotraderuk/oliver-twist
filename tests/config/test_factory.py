@@ -45,6 +45,12 @@ def test_parsing_invalid_config():
         ConfigFactory.create_config_from_path(PATH_TO_INVALID_CONFIG)
 
 
-def test_config_with_duplicates_raises_error():
+def test_parsing_config_with_duplicates_raises_error():
     with pytest.raises(InvalidConfigError):
         ConfigFactory.create_config_from_path(PATH_TO_DUPLICATE_CONFIG)
+
+
+def test_parsing_missing_config_file():
+    path_to_non_existent_config = Path() / "non_existent_config.yml"
+    with pytest.raises(FileNotFoundError):
+        ConfigFactory.create_config_from_path(path_to_non_existent_config)
