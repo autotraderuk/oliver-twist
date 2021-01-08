@@ -23,7 +23,7 @@ def test_rule_engine_returns_results_for_rule_set(empty_raw_manifest):
 
 
 def test_rule_engine_factory_method():
-    engine = RuleEngine.with_default_rules(Config(universal=[]))
+    engine = RuleEngine.with_configured_rules(Config(universal=[]))
 
     count = 0
     for count, rule in enumerate(engine):
@@ -34,7 +34,7 @@ def test_rule_engine_factory_method():
 
 
 def test_rule_engine_factory_method_with_config_filtering_out_disabled_rules():
-    engine = RuleEngine.with_default_rules(
+    engine = RuleEngine.with_configured_rules(
         config=Config(
             universal=[
                 RuleConfig(id="no-rejoin-models", enabled=False),

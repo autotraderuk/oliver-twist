@@ -39,7 +39,7 @@ logger = logging.getLogger("olivertwist")
 def main(input, config, html=True, browser=False):
     config = ConfigIO.read(config)
     manifest = Manifest(json.load(input))
-    rule_engine = RuleEngine.with_default_rules(config)
+    rule_engine = RuleEngine.with_configured_rules(config)
     results = rule_engine.run(manifest)
     format_for_terminal(results)
     metric_results = MetricEngine().run(manifest)
