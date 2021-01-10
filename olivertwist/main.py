@@ -9,10 +9,12 @@ import json
 import logging
 import os
 import webbrowser
+from pathlib import Path
 from typing import List
 
 import click
 
+from olivertwist.config.configurator import Configurator
 from olivertwist.config.io import ConfigIO
 from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
@@ -25,18 +27,38 @@ from olivertwist.ruleengine.result import Result
 logger = logging.getLogger("olivertwist")
 
 
-@click.command()
+@click.group()
+def main():
+    pass
+
+
+@main.command()
+@click.option(
+    "--config",
+    "config_path",
+    type=click.Path(dir_okay=False),
+    help="The path to the configuration file to create / edit",
+)
+def config(config_path):
+    """Interactively create or edit configuration file"""
+    config = ConfigIO.read(config_path)
+    config = Configurator.update(config)
+    ConfigIO.write(config, Path(config_path or ConfigIO.DEFAULT_CONFIG_FILE_PATH))
+
+
+@main.command()
 @click.argument("input", type=click.File("r"))
+@click.option(
+    "--config", type=click.Path(exists=True), help="The path to the configuration file"
+)
 @click.option("--html/--no-html", default=True, help="Do/Don't output report in HTML")
 @click.option(
     "--browser/--no-browser",
     default=False,
     help="Do/Don't open HTML report in browser. Implies --html",
 )
-@click.option(
-    "--config", type=click.Path(exists=True), help="The path to the configuration file"
-)
-def main(input, config, html=True, browser=False):
+def check(input, config, html=True, browser=False):
+    """Check dbt DAG against configured rules."""
     config = ConfigIO.read(config)
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_configured_rules(config)

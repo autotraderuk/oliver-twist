@@ -29,15 +29,14 @@ class DuplicateEntryError(InvalidConfigError):
     """Duplicate sections were present in the supplied config."""
 
 
-DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
-
-
 class ConfigIO:
+    DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
+
     @classmethod
     def read(cls, path: Union[Path, str]) -> Config:
         if path is None:
-            if DEFAULT_CONFIG_FILE_PATH.exists():
-                config = cls.__parse(DEFAULT_CONFIG_FILE_PATH)
+            if cls.DEFAULT_CONFIG_FILE_PATH.exists():
+                config = cls.__parse(cls.DEFAULT_CONFIG_FILE_PATH)
             else:
                 return Config(universal=[])
         else:
