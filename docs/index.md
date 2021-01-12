@@ -39,6 +39,7 @@ olivertwist check --help
 [All rules](./rules.md) are enabled by default. To change this you need a configuration file called `olivertwist.yml` in the same directory you are running `olivertwist`. An example configuration is shown below:
 
 ```yaml
+version: '1.0'
 universal:
   - id: no-rejoin-models
     enabled: false

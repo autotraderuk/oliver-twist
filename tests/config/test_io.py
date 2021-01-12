@@ -19,9 +19,11 @@ from olivertwist.config.model import (
     RuleConfig,
 )
 
-PATH_TO_VALID_CONFIG = Path(__file__).parent / "valid_config.yml"
-PATH_TO_INVALID_CONFIG = Path(__file__).parent / "invalid_config.yml"
-PATH_TO_DUPLICATE_CONFIG = Path(__file__).parent / "duplicate_config.yml"
+PATH_TO_CONFIGS = Path(__file__).parent / "examples"
+PATH_TO_VALID_CONFIG = PATH_TO_CONFIGS / "valid_config.yml"
+PATH_TO_INVALID_CONFIG = PATH_TO_CONFIGS / "invalid_config.yml"
+PATH_TO_DUPLICATE_CONFIG = PATH_TO_CONFIGS / "duplicate_config.yml"
+PATH_TO_NO_VERSION_CONFIG = PATH_TO_CONFIGS / "no_version_config.yml"
 
 
 @pytest.fixture
@@ -49,6 +51,11 @@ def test_getting_disabled_rule_ids_from_config():
 def test_parsing_invalid_config():
     with pytest.raises(InvalidConfigError):
         ConfigIO.read(PATH_TO_INVALID_CONFIG)
+
+
+def test_parsing_config_with_no_version_raises_error():
+    with pytest.raises(InvalidConfigError):
+        ConfigIO.read(PATH_TO_NO_VERSION_CONFIG)
 
 
 def test_parsing_config_with_duplicates_raises_error():
