@@ -29,15 +29,16 @@ class DuplicateEntryError(InvalidConfigError):
     """Duplicate sections were present in the supplied config."""
 
 
-DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
+class ConfigIO:
+    DEFAULT_CONFIG_FILE_PATH = Path("./olivertwist.yml")
+    CONFIG_FILE_VERSIONS = {"1.0": Config}
+    LATEST_CONFIG_FILE_VERSION = list(sorted(CONFIG_FILE_VERSIONS))[-1]
 
-
-class ConfigFactory:
     @classmethod
-    def create_config_from_path(cls, path: Union[Path, str]) -> Config:
+    def read(cls, path: Union[Path, str]) -> Config:
         if path is None:
-            if DEFAULT_CONFIG_FILE_PATH.exists():
-                config = cls.__parse(DEFAULT_CONFIG_FILE_PATH)
+            if cls.DEFAULT_CONFIG_FILE_PATH.exists():
+                config = cls.__parse(cls.DEFAULT_CONFIG_FILE_PATH)
             else:
                 return Config(universal=[])
         else:
@@ -46,13 +47,24 @@ class ConfigFactory:
         return cls.__validate(config)
 
     @classmethod
+    def write(cls, config: Config, path: Union[Path, str]):
+        with open(path, "w") as handle:
+            config_dict = config.to_dict()
+            config_dict["version"] = cls.LATEST_CONFIG_FILE_VERSION
+            yaml.dump(config_dict, handle)
+
+    @classmethod
     def __parse(cls, config_file_path: Union[Path, str]) -> Config:
         try:
             with open(config_file_path, "rb") as handle:
                 yaml_config_dict = yaml.load(
                     handle.read().decode("utf-8"), Loader=YamlLoader
                 )
+                # When we have a later version we can do something with the version...
+                _ = yaml_config_dict.pop("version")
                 return Config.from_dict(yaml_config_dict)
+        except KeyError:
+            raise InvalidConfigError("Version is missing.")
         except ValidationError as e:
             raise InvalidConfigError(e)
 
