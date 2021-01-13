@@ -5,8 +5,11 @@
 
 DAG Auditor
 
-![Build status badge](https://github.com/autotraderuk/oliver-twist/workflows/CI/badge.svg)
+[![Build status badge](https://github.com/autotraderuk/oliver-twist/workflows/CI/badge.svg)](https://github.com/autotraderuk/oliver-twist/actions?query=workflow%3ACI)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyPI](https://img.shields.io/pypi/v/olivertwist)](https://pypi.org/project/olivertwist/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/olivertwist)](https://pypi.org/project/olivertwist/)
+[![GitHub - License](https://img.shields.io/github/license/autotraderuk/oliver-twist)](https://github.com/autotraderuk/oliver-twist/blob/main/LICENSE)
 
 oliver-twist is a dag auditing tool that audits the [DBT](https://www.getdbt.com/) DAG and generates a summary report. There is a [docs site][1], including descriptions of all [currently implemented rules][2].
 
