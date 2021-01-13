@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@mermaid-js/mermaid-cli": "^8.8.4"
-  },
-  "scripts": {
-    "mmdc": "./node_modules/.bin/mmdc"
-  }
-}
