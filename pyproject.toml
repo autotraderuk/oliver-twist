@@ -36,6 +36,7 @@ black = "^20.8b1"
 flake8 = "^3.8.4"
 mkdocs = "^1.1.2"
 mkdocs-material = "^6.2.3"
+pymdown-extensions = "^8.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -13,6 +13,14 @@ extra_css:
   - css/extra.css
   - css/font-awesome/css/all.css  
 
+extra_javascript:
+  - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
+
 markdown_extensions:
   - attr_list
   - meta
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format

@@ -2,34 +2,23 @@
 title: Rules
 description: The dag auditing rules
 ---
-# Single source per staging model
 
-There are staging script(s) that have multiple source inputs.
-
-![staging model with multiple sources](images/staging_single_source.png)
-
-When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
-
-# No rejoin models
-
-These models are taking part in rejoins.
-
-![example graph showing rejoin](images/no_rejoin.png)
-
-The example above shows that `A` is rejoined into `C`. This probably means that something is missing in `B`.
-
-# No disabled models
+## No disabled models
 
 There are disabled scripts.
 
 If you have disabled a script that you no longer require, you should probably delete it.
 Assuming that you have your dbt scripts under version control, you can always retrieve the script if you need it in future.
 
-# No orphaned models
+## No orphaned models
 
 There are model(s) that have become disconnected and have no resolvable dependencies.
 
-![example graph showing orphaned model](images/no_orphans.png)
+```mermaid
+graph LR
+  A --> B --> C
+  Orphan
+```
 
 This can be caused by:
 
@@ -52,37 +41,85 @@ SELECT *
 FROM {{ ref('script_name') }}
 ```
 
-# No references outside of its own staging area
+## Single source per staging model
+
+There are staging script(s) that have multiple source inputs.
+
+```mermaid
+graph LR
+  src1[Source A] & src2[Source B] --> Staging
+```
+
+When a staging script depends on a source, it should be a one-to-one mapping. This allows for any renaming or casting from the source system to be done in one place.
+
+## No rejoin models
+
+These models are taking part in rejoins.
+
+```mermaid
+graph LR
+  Source --> Staging --> m1[Mart A] --> m2[Mart B]
+  Staging --> m2
+```
+
+The example above shows that `Staging` is rejoined into `Mart B`. This probably means that something is missing in `Mart A`.
+
+## No references outside of its own staging area
 
 There are staging model(s) referencing a staging model that belongs in a different area
 
+```mermaid
+graph LR
+  subgraph stg2[Staging 2]
+  src_b --> stg_b
+  end
+  subgraph stg1[Staging 1]
+  src_a --> stg_a
+  end
+  subgraph stg3[Staging 3]
+  src_b --This is bad!--> stg_c
+  end
+  
+```
+
 If you want to cross areas, this should be done at mart level.
 
-# No references to marts from staging
+## No references to marts from staging
 
 There are staging model(s) referencing a mart model.
 
-![Alt text](images/no_references_to_marts_from_staging.png)
+```mermaid
+graph LR
+  Source --> Staging --> Marts
+  Marts --This is bad!--> Staging
+```
 
 Data should be flowing from source centric to business centric areas like so:
 
 ```mermaid
 graph LR
-   source --> staging --> marts
+  Source --> Staging --> Marts
 ```
 
-![Alt text](images/data_flow_diagram.png)
+## No references to source from marts
 
-# No references to source from marts
 There are mart model(s) referencing a source. 
 
-![Alt text](images/no_references_to_source_from_marts.png)
+```mermaid
+graph LR
+  Source --> Staging --> Marts
+  Source --This is bad!--> m2[Mart B]
+```
 
 Data should be flowing from source centric to business centric areas like so:
 
-![Alt text](images/data_flow_diagram.png)
+```mermaid
+graph LR
+  Source --> Staging --> Marts
+```
 
-# No owner on physical models
+## No owner on physical models
+
 There are physical models without a designated owner. Physical models consist of the following:
 - sources
 - table materialization
