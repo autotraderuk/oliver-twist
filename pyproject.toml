@@ -21,7 +21,6 @@ ot = "olivertwist.main:main"
 [tool.poetry.dependencies]
 python = "^3.6"
 click = "^7.1.2"
-colorama = "^0.4.4"
 networkx = "^2.5"
 Jinja2 = "2.11.2"
 dataclasses = {version = "^0.8", python = "~3.6"}
