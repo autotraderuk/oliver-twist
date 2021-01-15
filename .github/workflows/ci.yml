@@ -22,6 +22,10 @@ jobs:
         - 0.18.0
         - 0.18.1
         - 0.19.0rc2
+        exclude:
+          # dbt release candidate doesn't install in Python 3.9
+          - python-version: 3.9
+            dbt-version: 0.19.0rc2
 
     steps:
     - uses: actions/checkout@v2
