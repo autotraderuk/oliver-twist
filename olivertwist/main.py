@@ -94,12 +94,11 @@ def format_for_terminal(results: List[Result]):
 
 
 def get_colour(result: Result):
-    colour = "green"
     if result.has_errors:
-        colour = "red"
-    if result.has_warnings:
-        colour = "yellow"
-    return colour
+        return "red"
+    elif result.has_warnings:
+        return "yellow"
+    return "green"
 
 
 def exit_message(results: List[Result]):
