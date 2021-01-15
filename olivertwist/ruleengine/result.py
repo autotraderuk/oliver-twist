@@ -7,6 +7,7 @@ Created 15. Dec 2020 17:09
 """
 from typing import List
 
+from olivertwist.config.model import Severity
 from olivertwist.manifest import Node
 from olivertwist.ruleengine.rule import Rule
 
@@ -18,5 +19,9 @@ class Result:
         self.failures = failures
 
     @property
-    def has_failures(self):
-        return bool(self.failures)
+    def has_errors(self):
+        return self.rule.severity is Severity.ERROR and bool(self.failures)
+
+    @property
+    def has_warnings(self):
+        return self.rule.severity is Severity.WARNING and bool(self.failures)

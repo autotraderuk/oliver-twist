@@ -6,6 +6,9 @@
     <li class="list-inline-item">
         {{ status('errored') }} Errored: {{ summary.errored }}
     </li>
+     <li class="list-inline-item">
+        {{ status('warned') }} Warned: {{ summary.warned }}
+    </li>
 </ul>
 {% endmacro %}
 
@@ -19,5 +22,8 @@
     {% endif %}
     {% if status == 'errored' %} 
         <p><i class="fas fa-times text-danger"></i>
+    {% endif %}
+    {% if status == 'warned' %} 
+        <p><i class="fas fa-exclamation-triangle text-warning"></i>
     {% endif %}
 {% endmacro %}

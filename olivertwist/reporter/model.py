@@ -14,6 +14,7 @@ class ReportStatus(str, Enum):
     PASSED = "passed"
     SKIPPED = "skipped"
     ERRORED = "errored"
+    WARNED = "warned"
 
 
 @dataclass
@@ -48,10 +49,12 @@ class ReportSummary:
         passed: int,
         skipped: int,
         errored: int,
+        warned: int,
     ) -> None:
         self.passed = passed
         self.skipped = skipped
         self.errored = errored
+        self.warned = warned
 
 
 @dataclass

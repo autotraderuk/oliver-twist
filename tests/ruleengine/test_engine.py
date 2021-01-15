@@ -5,7 +5,7 @@ Copyright (C) 2020, Auto Trader UK
 Created 15. Dec 2020 15:13
 
 """
-from olivertwist.config.model import Config, RuleConfig
+from olivertwist.config.model import Config, RuleConfig, Severity
 from olivertwist.manifest import Manifest, Node
 from olivertwist.ruleengine.engine import RuleEngine
 from olivertwist.ruleengine.result import Result
@@ -44,3 +44,25 @@ def test_rule_engine_factory_method_with_config_filtering_out_disabled_rules():
     )
 
     assert "no-rejoin-models" not in [rule.id for rule in engine.rules]
+
+
+def test_rule_engine_factory_method_with_config_setting_severity():
+    engine = RuleEngine.with_configured_rules(
+        config=Config(
+            universal=[
+                RuleConfig(
+                    id="no-rejoin-models", enabled=True, severity=Severity.ERROR
+                ),
+                RuleConfig(
+                    id="no-disabled-models", enabled=True, severity=Severity.WARNING
+                ),
+            ]
+        )
+    )
+
+    assert ("no-rejoin-models", Severity.ERROR) in [
+        (rule.id, rule.severity) for rule in engine.rules
+    ]
+    assert ("no-disabled-models", Severity.WARNING) in [
+        (rule.id, rule.severity) for rule in engine.rules
+    ]
