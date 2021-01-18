@@ -78,29 +78,6 @@ def check(input, config, html=True, browser=False):
     exit_message(results)
 
 
-def format_for_terminal(results: List[Result]):
-    for result in results:
-        colour = get_colour(result)
-        name = click.style(f"{result.rule.name}:", fg=colour)
-        link = click.style(
-            f"http://olivertwi.st/rules/#{result.rule.id}",
-            fg="blue",
-        )
-        click.echo(f"{name} [{link}]:")
-        for node in result.failures:
-            click.secho(f" - {node.id}", fg=colour)
-
-        click.echo()
-
-
-def get_colour(result: Result):
-    if result.has_errors:
-        return "red"
-    elif result.has_warnings:
-        return "yellow"
-    return "green"
-
-
 def exit_message(results: List[Result]):
     if any([result.has_errors for result in results]):
         click.get_current_context().exit("🔀 Twisted!")

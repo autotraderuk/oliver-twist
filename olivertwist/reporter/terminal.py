@@ -13,12 +13,11 @@ from olivertwist.ruleengine.result import Result
 
 
 def get_colour(result: Result):
-    colour = "green"
     if result.has_errors:
-        colour = "red"
-    if result.has_warnings:
-        colour = "yellow"
-    return colour
+        return "red"
+    elif result.has_warnings:
+        return "yellow"
+    return "green"
 
 
 def report_to_terminal(results: List[Result]):
