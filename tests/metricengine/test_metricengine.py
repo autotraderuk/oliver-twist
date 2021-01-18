@@ -7,9 +7,8 @@ Created 16. Dec 2020 16:30
 """
 import pytest
 
-from olivertwist.manifest import Manifest, Node
+from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
-from olivertwist.metricengine.engine import MetricResult
 
 
 @pytest.fixture
