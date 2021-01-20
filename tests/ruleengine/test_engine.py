@@ -26,7 +26,7 @@ def test_rule_engine_factory_method():
     engine = RuleEngine.with_configured_rules(Config(universal=[]))
 
     count = 0
-    for count, rule in enumerate(engine):
+    for rule in engine:
         assert isinstance(rule, Rule)
         count += 1
 
