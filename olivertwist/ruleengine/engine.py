@@ -5,12 +5,13 @@ Copyright (C) 2020, Auto Trader UK
 Created 15. Dec 2020 14:45
 
 """
-from typing import List
+from pathlib import Path
+from typing import List, Union
 
 import olivertwist
 from olivertwist.config.model import Config, Severity
 from olivertwist.manifest import Manifest
-from olivertwist.ruleengine.discovery import rules_in_package
+from olivertwist.ruleengine.discovery import rules_in_path
 from olivertwist.ruleengine.result import Result
 from olivertwist.ruleengine.rule import Rule
 
@@ -21,6 +22,23 @@ class RuleEngine:
 
     def __iter__(self):
         return iter(self.rules)
+
+    def __len__(self):
+        return len(self.rules)
+
+    @classmethod
+    def with_configured_rules(
+        cls, config: Config, directory: Union[str, Path] = None
+    ) -> "RuleEngine":
+        if directory is None:
+            directory = Path(olivertwist.__path__[0])
+
+        all_rules = rules_in_path(directory)
+        enabled_rules = RuleEngine.__get_enabled_rules(all_rules, config)
+        return cls(enabled_rules)
+
+    def run(self, manifest: Manifest) -> List[Result]:
+        return [Result(rule, *rule.apply(manifest)) for rule in self.rules]
 
     def __get_enabled_rules(all_rules: List[Rule], config: Config):
         enabled_rules = []
@@ -33,12 +51,3 @@ class RuleEngine:
                     rule.severity = Severity.ERROR
                 enabled_rules.append(rule)
         return enabled_rules
-
-    @classmethod
-    def with_configured_rules(cls, config: Config) -> "RuleEngine":
-        all_rules = rules_in_package(olivertwist)
-        enabled_rules = RuleEngine.__get_enabled_rules(all_rules, config)
-        return cls(enabled_rules)
-
-    def run(self, manifest: Manifest) -> List[Result]:
-        return [Result(rule, *rule.apply(manifest)) for rule in self.rules]

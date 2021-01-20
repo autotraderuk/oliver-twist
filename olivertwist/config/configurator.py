@@ -11,13 +11,13 @@ from PyInquirer import prompt
 
 import olivertwist
 from olivertwist.config.model import Config, RuleConfig
-from olivertwist.ruleengine.discovery import rules_in_package
+from olivertwist.ruleengine.discovery import rules_in_path
 
 
 class Configurator:
     @classmethod
     def update(cls, config: Config) -> Config:
-        all_rules = rules_in_package(olivertwist)
+        all_rules = rules_in_path(olivertwist.__path__[0])
         disabled = config.get_disabled_rule_ids()
         choices = [
             {
