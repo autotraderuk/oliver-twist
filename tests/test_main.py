@@ -5,6 +5,8 @@ Copyright (C) 2021, Auto Trader UK
 Created 21. Jan 2021 19:37
 
 """
+import json
+import os
 from pathlib import Path
 from unittest.mock import patch
 
@@ -40,6 +42,32 @@ def test_check_with_non_existent_config():
 
         assert result.exit_code != 0
         assert "Invalid value for '--config'" in result.output
+
+
+def test_check_with_additional_rules_directories(empty_raw_manifest):
+    runner = CliRunner()
+    manifest_json = "manifest.json"
+    rule_dir_1 = "my_rules"
+    rule_dir_2 = "more_rules"
+    with runner.isolated_filesystem():
+        with open(manifest_json, "w") as fh:
+            json.dump(empty_raw_manifest, fh)
+
+        os.mkdir(rule_dir_1)
+        os.mkdir(rule_dir_2)
+
+        result = runner.invoke(
+            main,
+            [
+                "--debug",
+                "check",
+                f"--add-rules-from={rule_dir_1}",
+                f"--add-rules-from={rule_dir_2}",
+                manifest_json,
+            ],
+        )
+
+        assert result.exit_code == 0
 
 
 @patch.object(Configurator, "update", return_value=Config.empty())

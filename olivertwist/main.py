@@ -63,17 +63,27 @@ def config(config_path):
 @click.option(
     "--config", type=click.Path(exists=True), help="The path to the configuration file"
 )
+@click.option(
+    "add_rules_paths",
+    "--add-rules-from",
+    multiple=True,
+    type=click.Path(exists=True, readable=True, dir_okay=True, file_okay=False),
+    help="Add custom rules from a directory (repeatable for multiple locations)",
+)
 @click.option("--html/--no-html", default=True, help="Do/Don't output report in HTML")
 @click.option(
     "--browser/--no-browser",
     default=False,
     help="Do/Don't open HTML report in browser. Implies --html",
 )
-def check(input, config, html=True, browser=False):
+def check(input, config, add_rules_paths, html=True, browser=False):
     """Check dbt DAG against configured rules."""
     config = ConfigIO.read(config)
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_configured_rules(config)
+    for rule_path in add_rules_paths:
+        rule_engine.extend(RuleEngine.with_configured_rules(config, rule_path))
+
     results = rule_engine.run(manifest)
     report_to_terminal(results)
     metric_results = MetricEngine().run(manifest)
