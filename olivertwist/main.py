@@ -16,6 +16,7 @@ import click
 
 from olivertwist.config.configurator import Configurator
 from olivertwist.config.io import ConfigIO
+from olivertwist.config.model import Config
 from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
 from olivertwist.reporter.adapter import to_html_report
@@ -29,8 +30,11 @@ logger = logging.getLogger("olivertwist")
 
 
 @click.group()
-def main():
-    pass
+@click.option("--debug/--no-debug", default=False)
+def main(debug):
+    if debug:
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Debug mode on!")
 
 
 @main.command()
@@ -42,9 +46,16 @@ def main():
 )
 def config(config_path):
     """Interactively create or edit configuration file"""
-    config = ConfigIO.read(config_path)
-    config = Configurator.update(config)
-    ConfigIO.write(config, Path(config_path or ConfigIO.DEFAULT_CONFIG_FILE_PATH))
+    config_path = Path(config_path or ConfigIO.DEFAULT_CONFIG_FILE_PATH)
+    logging.debug(config_path)
+    try:
+        config_obj = ConfigIO.read(config_path)
+    except FileNotFoundError:
+        config_obj = Config.empty()
+
+    config_obj = Configurator.update(config_obj)
+    ConfigIO.write(config_obj, config_path)
+    click.echo(f"Created/updated config in {config_path}")
 
 
 @main.command()

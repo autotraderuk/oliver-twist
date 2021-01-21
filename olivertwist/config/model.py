@@ -29,6 +29,10 @@ class RuleConfig(JsonSchemaMixin):
 class Config(JsonSchemaMixin):
     universal: List[RuleConfig]
 
+    @classmethod
+    def empty(cls):
+        return cls(universal=[])
+
     def get_disabled_rule_ids(self) -> List[str]:
         return [r.id for r in self.universal if r.enabled is False]
 
