@@ -37,6 +37,10 @@ class RuleEngine:
         enabled_rules = RuleEngine.__get_enabled_rules(all_rules, config)
         return cls(enabled_rules)
 
+    def extend(self, other: "RuleEngine") -> None:
+        """Mutate self by extending with the rules in `other`."""
+        self.rules.extend(other.rules)
+
     def run(self, manifest: Manifest) -> List[Result]:
         return [Result(rule, *rule.apply(manifest)) for rule in self.rules]
 

@@ -35,6 +35,19 @@ def test_rule_engine_returns_results_for_rule_set(empty_raw_manifest):
     assert isinstance(results[0], Result)
 
 
+def test_rule_engine_extend():
+    nodes = [Node({})]
+    engine_1 = RuleEngine([Rule("test-1", "this always fails!", lambda m: ([], nodes))])
+    engine_2 = RuleEngine(
+        [Rule("test-2", "this always succeeds!", lambda m: (nodes, []))]
+    )
+
+    engine_1.extend(engine_2)
+
+    assert len(engine_1) == 2
+    assert ["test-1", "test-2"] == [r.id for r in engine_1]
+
+
 def test_rule_engine_factory_method():
     engine = RuleEngine.with_configured_rules(Config(universal=[]))
 
