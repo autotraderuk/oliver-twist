@@ -25,7 +25,7 @@ def report_to_terminal(results: List[Result]):
         colour = get_colour(result)
         name = click.style(f"{result.rule.name}:", fg=colour)
         link = click.style(
-            f"https://github.com/autotraderuk/oliver-twist/blob/main/RULES.md#{result.rule.id}",
+            f"https://olivertwi.st/rules/#{result.rule.id}",
             fg="blue",
         )
         click.echo(f"{name} [{link}]:")
