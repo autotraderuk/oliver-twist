@@ -28,22 +28,7 @@ This will report any failures to the console, and also in HTML format in a direc
 olivertwist check manifest.json --browser
 ```
 
-You can also tell Oliver to load and run your own custom rules using the `--add-rules-from` option:
-
-```shell
-olivertwist check --add-rules-from=./custom_rules_dir/ manifest.json
-```
-
-In order to be discovered and run, rules must be instances of `olivertwist.ruleengine.rule.Rule`. This can be achieved by instantiating an instance of the class directly, or by applying the `@rule` decorator to a plain function with the signature `(manifest: Manifest) -> (passes: List[Node], failures: List[Node])` e.g.:
-
-```python
-from olivertwist.ruleengine.rule import rule
-
-@rule(id="my-pointless-rule", name="Everything is allowed!")
-def pass_everything(manifest: Manifest) -> Tuple[List[Node], List[Node]]:
-    return list(manifest.nodes()), []
-
-```
+You can also tell Oliver to load and run your own custom rules using the `--add-rules-from` option. See [Custom Rules](./custom_rules.md) for full details.
 
 Full options are available with:
 
