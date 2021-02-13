@@ -1,0 +1,6 @@
+version: 1
+universal:
+    - id: no-rejoin-models
+      enabled: true
+      ignore:
+        - model.oliver_twist.example_1

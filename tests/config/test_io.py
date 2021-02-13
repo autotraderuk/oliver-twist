@@ -24,6 +24,7 @@ PATH_TO_VALID_CONFIG = PATH_TO_CONFIGS / "valid_config.yml"
 PATH_TO_INVALID_CONFIG = PATH_TO_CONFIGS / "invalid_config.yml"
 PATH_TO_DUPLICATE_CONFIG = PATH_TO_CONFIGS / "duplicate_config.yml"
 PATH_TO_NO_VERSION_CONFIG = PATH_TO_CONFIGS / "no_version_config.yml"
+PATH_TO_VALID_CONFIG_WITH_IGNORE = PATH_TO_CONFIGS / "config_with_ignore.yml"
 
 
 @pytest.fixture
@@ -67,6 +68,13 @@ def test_parsing_missing_config_file():
     path_to_non_existent_config = Path() / "non_existent_config.yml"
     with pytest.raises(FileNotFoundError):
         ConfigIO.read(path_to_non_existent_config)
+
+
+def test_parsing_config_with_ignore():
+    config = ConfigIO.read(PATH_TO_VALID_CONFIG_WITH_IGNORE)
+    rule_config = config.get_config_for_rule_id("no-rejoin-models")
+
+    assert "model.oliver_twist.example_1" in rule_config.ignore
 
 
 def test_serializing_config(config: Config):
