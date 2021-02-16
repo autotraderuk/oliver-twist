@@ -38,7 +38,7 @@ class ReportMetrics:
     def __init__(
         self,
         name: str,
-        score: int,
+        score: float,
     ) -> None:
         self.name = name
         self.score = score
