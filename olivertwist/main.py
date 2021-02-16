@@ -18,7 +18,7 @@ from olivertwist.config.configurator import Configurator
 from olivertwist.config.io import ConfigIO
 from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
-from olivertwist.reporter.adapter import to_html_report
+from olivertwist.reporter.adapter import to_report
 from olivertwist.reporter.model import MyEncoder
 from olivertwist.reporter.reporter import output_json, render_html_report
 from olivertwist.reporter.terminal import report_to_terminal
@@ -66,7 +66,7 @@ def check(input, config, html=True, browser=False):
     results = rule_engine.run(manifest)
     report_to_terminal(results)
     metric_results = MetricEngine().run(manifest)
-    report = to_html_report(results, metric_results)
+    report = to_report(results, metric_results)
     oliver_twist = json.loads(MyEncoder().encode(report))
     output_json(oliver_twist)
     if html or browser:

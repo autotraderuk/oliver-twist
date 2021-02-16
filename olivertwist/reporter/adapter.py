@@ -14,7 +14,7 @@ from olivertwist.ruleengine.result import Result
 from olivertwist.ruleengine.rule import Rule
 
 
-def to_html_report(
+def to_report(
     domain_results: List[Result], metric_results: List[MetricResult]
 ) -> Report:
     models: List[ReportModel] = __organise_by_model(domain_results, metric_results)
