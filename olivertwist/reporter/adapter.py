@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""Adapter to transform list of results into a Report."""
 from typing import Dict, List
 
 from olivertwist.manifest import Node
@@ -18,18 +20,7 @@ def to_report(
     domain_results: List[Result], metric_results: List[MetricResult]
 ) -> Report:
     models: List[ReportModel] = __organise_by_model(domain_results, metric_results)
-    summary: ReportSummary = __derive_summary(models)
-    return Report(summary, models)
-
-
-def __derive_summary(models: List[ReportModel]) -> ReportSummary:
-    # TODO: summary.skipped?
-    skipped = 0
-    errored = len([a_model for a_model in models if a_model.summary.errored > 0])
-    warned = len([a_model for a_model in models if a_model.summary.warned > 0])
-    passed = len(models) - errored - warned
-
-    return ReportSummary(passed, skipped, errored, warned)
+    return Report.from_models(models)
 
 
 def __organise_by_model(
