@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Adapter to transform list of results into a Report."""
+from collections import defaultdict
 from typing import Dict, List
 
 from olivertwist.manifest import Node
@@ -69,7 +70,7 @@ def __html_rules_by_model_name(
     errored_rules_by_model: Dict[str, List[Rule]],
     warned_rules_by_model: Dict[str, List[Rule]],
 ) -> Dict[str, List[ReportRule]]:
-    result: Dict[str, List[ReportRule]] = {}
+    result: Dict[str, List[ReportRule]] = defaultdict(list)
     for model_name, domain_rules in passed_rules_by_model.items():
         html_rules: List[ReportRule] = [
             ReportRule(domain_rule.id, domain_rule.name, ReportStatus.PASSED)
@@ -82,41 +83,43 @@ def __html_rules_by_model_name(
             ReportRule(domain_rule.id, domain_rule.name, ReportStatus.ERRORED)
             for domain_rule in domain_rules
         ]
-        result.setdefault(model_name, []).extend(html_rules)
+        result[model_name].extend(html_rules)
 
     for model_name, domain_rules in warned_rules_by_model.items():
         html_rules: List[ReportRule] = [
             ReportRule(domain_rule.id, domain_rule.name, ReportStatus.WARNED)
             for domain_rule in domain_rules
         ]
-        result.setdefault(model_name, []).extend(html_rules)
+        result[model_name].extend(html_rules)
 
     return result
 
 
 def __passed_rules_by_model_name(domain: List[Result]) -> Dict[str, List[Rule]]:
-    passed_rules: Dict[str, List[Rule]] = {}
+    passed_rules: Dict[str, List[Rule]] = defaultdict(list)
     for a_domain in domain:
         for node in a_domain.passes:
-            passed_rules.setdefault(node.id, []).append(a_domain.rule)
+            passed_rules[node.id].append(a_domain.rule)
     return passed_rules
 
 
 def __errored_rules_by_model_name(domain: List[Result]) -> Dict[str, List[Rule]]:
-    failed_rules: Dict[str, List[Rule]] = {}
+    failed_rules: Dict[str, List[Rule]] = defaultdict(list)
     for a_domain in domain:
         if a_domain.has_errors:
             for node in a_domain.failures:
-                failed_rules.setdefault(node.id, []).append(a_domain.rule)
+                failed_rules[node.id].append(a_domain.rule)
+
     return failed_rules
 
 
 def __warned_rules_by_model(domain: List[Result]) -> Dict[str, List[Rule]]:
-    failed_rules: Dict[str, List[Rule]] = {}
+    failed_rules: Dict[str, List[Rule]] = defaultdict(list)
     for a_domain in domain:
         if a_domain.has_warnings:
             for node in a_domain.failures:
-                failed_rules.setdefault(node.id, []).append(a_domain.rule)
+                failed_rules[node.id].append(a_domain.rule)
+
     return failed_rules
 
 
@@ -126,6 +129,7 @@ def __domain_node_by_model_name(domain: List[Result]) -> Dict[str, Node]:
         all_nodes: List[Node] = a_domain.passes + a_domain.failures
         for duped_node in all_nodes:
             deduped_nodes[duped_node.id] = duped_node
+
     return deduped_nodes
 
 
