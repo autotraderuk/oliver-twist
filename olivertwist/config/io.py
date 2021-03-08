@@ -40,7 +40,7 @@ class ConfigIO:
             if cls.DEFAULT_CONFIG_FILE_PATH.exists():
                 config = cls.__parse(cls.DEFAULT_CONFIG_FILE_PATH)
             else:
-                return Config(universal=[])
+                return Config.empty()
         else:
             config = cls.__parse(path)
 

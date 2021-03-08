@@ -35,8 +35,9 @@ This will report any failures to the console, and also in HTML format in a direc
 olivertwist check manifest.json --browser
 ```
 
-Full options are available with:
+You can also tell Oliver to load and run your own custom rules using the `--add-rules-from` option. See [documentation for full details](https://olivertwi.st/custom_rules/).
 
+Full options are available with:
 
 ```shell
 olivertwist check --help

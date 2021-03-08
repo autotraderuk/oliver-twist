@@ -16,6 +16,7 @@ import click
 
 from olivertwist.config.configurator import Configurator
 from olivertwist.config.io import ConfigIO
+from olivertwist.config.model import Config
 from olivertwist.manifest import Manifest
 from olivertwist.metricengine.engine import MetricEngine
 from olivertwist.reporter.adapter import to_html_report
@@ -29,8 +30,11 @@ logger = logging.getLogger("olivertwist")
 
 
 @click.group()
-def main():
-    pass
+@click.option("--debug/--no-debug", default=False)
+def main(debug):
+    if debug:
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Debug mode on!")
 
 
 @main.command()
@@ -42,9 +46,16 @@ def main():
 )
 def config(config_path):
     """Interactively create or edit configuration file"""
-    config = ConfigIO.read(config_path)
-    config = Configurator.update(config)
-    ConfigIO.write(config, Path(config_path or ConfigIO.DEFAULT_CONFIG_FILE_PATH))
+    config_path = Path(config_path or ConfigIO.DEFAULT_CONFIG_FILE_PATH)
+    logging.debug(config_path)
+    try:
+        config_obj = ConfigIO.read(config_path)
+    except FileNotFoundError:
+        config_obj = Config.empty()
+
+    config_obj = Configurator.update(config_obj)
+    ConfigIO.write(config_obj, config_path)
+    click.echo(f"Created/updated config in {config_path}")
 
 
 @main.command()
@@ -52,17 +63,27 @@ def config(config_path):
 @click.option(
     "--config", type=click.Path(exists=True), help="The path to the configuration file"
 )
+@click.option(
+    "add_rules_paths",
+    "--add-rules-from",
+    multiple=True,
+    type=click.Path(exists=True, readable=True, dir_okay=True, file_okay=False),
+    help="Add custom rules from a directory (repeatable for multiple locations)",
+)
 @click.option("--html/--no-html", default=True, help="Do/Don't output report in HTML")
 @click.option(
     "--browser/--no-browser",
     default=False,
     help="Do/Don't open HTML report in browser. Implies --html",
 )
-def check(input, config, html=True, browser=False):
+def check(input, config, add_rules_paths, html=True, browser=False):
     """Check dbt DAG against configured rules."""
     config = ConfigIO.read(config)
     manifest = Manifest(json.load(input))
     rule_engine = RuleEngine.with_configured_rules(config)
+    for rule_path in add_rules_paths:
+        rule_engine.extend(RuleEngine.with_configured_rules(config, rule_path))
+
     results = rule_engine.run(manifest)
     report_to_terminal(results)
     metric_results = MetricEngine().run(manifest)
