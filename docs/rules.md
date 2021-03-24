@@ -43,7 +43,7 @@ FROM {{ ref('script_name') }}
 
 ## Single source per staging model
 
-There are staging script(s) that have multiple source inputs.
+There are [staging](#staging) script(s) that have multiple [source](#source) inputs.
 
 ```mermaid
 graph LR
@@ -66,7 +66,7 @@ The example above shows that `Staging` is rejoined into `Mart B`. This probably 
 
 ## No references outside of its own staging area
 
-There are staging model(s) referencing a staging model that belongs in a different area
+There are [staging](#staging) model(s) referencing a staging model that belongs in a different area
 
 ```mermaid
 graph LR
@@ -86,7 +86,7 @@ If you want to cross areas, this should be done at mart level.
 
 ## No references to marts from staging
 
-There are staging model(s) referencing a mart model.
+There are [staging](#staging) model(s) referencing a [mart](#mart) model.
 
 ```mermaid
 graph LR
@@ -103,7 +103,7 @@ graph LR
 
 ## No references to source from marts
 
-There are mart model(s) referencing a source. 
+There are [mart](#mart) model(s) referencing a [source](#source). 
 
 ```mermaid
 graph LR
@@ -127,3 +127,16 @@ There are physical models without a designated owner. Physical models consist of
 - incremental materialization
 
 To ensure ownership and proper cataloguing of data is preserved, fill in all your physical models with the owner tag as described in the [Dbt reference](https://docs.getdbt.com/reference/resource-properties/meta/#designate-a-model-owner)
+
+
+## Definitions
+### Source
+
+The resource type is "source".
+### Mart
+
+The resource type is "model" and the fully qualified name contains "marts"
+
+### Staging
+
+The resource type is "model" and the either the fully qualified name contains "staging" or the model id contains "stg_"
