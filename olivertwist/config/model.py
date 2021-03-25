@@ -6,7 +6,7 @@ Created 23. Dec 2020 13:40
 
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional, List
 
@@ -23,6 +23,7 @@ class RuleConfig(JsonSchemaMixin):
     id: str
     enabled: bool
     severity: Optional[Severity] = Severity.ERROR
+    ignore: Optional[List[str]] = field(default_factory=list)
 
 
 @dataclass

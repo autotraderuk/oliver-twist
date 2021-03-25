@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Domain objects for reporting."""
+
 from dataclasses import dataclass
 from enum import Enum
 from json import JSONEncoder
@@ -35,7 +38,7 @@ class ReportMetrics:
     def __init__(
         self,
         name: str,
-        score: int,
+        score: float,
     ) -> None:
         self.name = name
         self.score = score
@@ -55,6 +58,16 @@ class ReportSummary:
         self.skipped = skipped
         self.errored = errored
         self.warned = warned
+
+    @classmethod
+    def from_models(cls, models: List["ReportModel"]):
+        # TODO: Implement summary.skipped
+        skipped = 0
+        errored = len([a_model for a_model in models if a_model.summary.errored > 0])
+        warned = len([a_model for a_model in models if a_model.summary.warned > 0])
+        passed = len(models) - errored - warned
+
+        return cls(passed, skipped, errored, warned)
 
 
 @dataclass
@@ -81,3 +94,7 @@ class Report:
     def __init__(self, summary: ReportSummary, models: List[ReportModel]) -> None:
         self.summary = summary
         self.models = models
+
+    @classmethod
+    def from_models(cls, models: List[ReportModel]):
+        return cls(ReportSummary.from_models(models), models)
