@@ -66,7 +66,8 @@ class Node:
 
     @property
     def is_mart(self) -> bool:
-        return self.data["resource_type"] == "model" and self.__fqn_contains("marts")
+        return self.data["resource_type"] == "model" and (
+            self.__fqn_contains("warehouse") or "wh_" in self.id)
 
     @property
     def is_source(self) -> bool:
