@@ -37,6 +37,6 @@ setup(
     packages=['olivertwist', 'olivertwist.config', 'olivertwist.metricengine', 'olivertwist.reporter', 'olivertwist.ruleengine', 'olivertwist.rules'],
     package_dir={"": "."},
     package_data={"olivertwist.reporter": ["html/css/*.css", "html/images/*.svg", "html/webfonts/*.eot", "html/webfonts/*.svg", "html/webfonts/*.ttf", "html/webfonts/*.woff", "html/webfonts/*.woff2", "templates/*.html", "templates/*.jinja"]},
-    install_requires=['click==7.*,>=7.1.2', 'colorama<0.4.4', 'dataclasses==0.*,>=0.8.0; python_version == "3.6.*" and python_version >= "3.6.0"', 'dataclasses-jsonschema==2.*,>=2.13.0', 'flake8-bugbear==20.*,>=20.11.1', 'jinja2==2.11.3', 'networkx==2.*,>=2.5.0', 'pyinquirer==1.*,>=1.0.3', 'pyyaml==5.*,>=5.3.1'],
+    install_requires=['click==7.*,>=7.1.2', 'colorama<0.4.4', 'dataclasses==0.*,>=0.8.0; python_version == "3.6.*" and python_version >= "3.6.0"', 'dataclasses-jsonschema==2.*,>=2.13.0', 'flake8-bugbear==20.*,>=20.11.1', 'jinja2==2.11.3', 'networkx==2.*,>=2.5.0', 'pyinquirer==1.*,>=1.0.3', 'pyyaml==5.*,>=5.3.1', 'scipy'],
     extras_require={"dev": ["black==20.*,>=20.8.0.b1", "flake8==3.*,>=3.8.4", "mkdocs==1.*,>=1.1.2", "mkdocs-material==6.*,>=6.2.3", "pre-commit==2.*,>=2.9.0; python_version == \"3.*\" and python_version >= \"3.6.1\"", "pymdown-extensions==8.*,>=8.1.0", "pytest==6.*,>=6.2.0"]},
 )
